@@ -8,12 +8,10 @@ import java.util.ArrayList;
 import surfaces.*;
 
 public class NRBWriter {
-     public void writeFVMesh(String filename, NURBS nurbs) {
+     public void writeNURBS(String filename, NURBS nurbs) {
           try {
                int degreeU = nurbs.getDegreeU();
                int degreeV = nurbs.getDegreeV();
-               int nU = nurbs.getnU();
-               int nV = nurbs.getnV();
                ArrayList<Double> knotsU = nurbs.getKnotsU();
                ArrayList<Double> knotsV = nurbs.getKnotsV();
                ArrayList<ArrayList<WPoint3D>> controlNet = nurbs.getControlNet();
@@ -21,10 +19,7 @@ public class NRBWriter {
                writer.write("nurbs" + "\n"
                                       + "degreeU " + degreeU + "\n"
                                       + "degreeV " + degreeV + "\n"
-                                      + "nU " + nU + "\n"
-                                      + "nV " + nV + "\n"
                                       + "end_header");
-
                for (Double i : knotsU) {
                     writer.write(i + " ");
                }
@@ -39,10 +34,10 @@ public class NRBWriter {
                     }
                     writer.newLine();
                }
+               writer.write("end_file");
                writer.close();
           } catch (IOException e) {
                e.printStackTrace();
           }
-
      }
 }
