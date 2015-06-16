@@ -16,10 +16,11 @@ public class NRBWriter {
                ArrayList<Double> knotsV = nurbs.getKnotsV();
                ArrayList<ArrayList<WPoint3D>> controlNet = nurbs.getControlNet();
                BufferedWriter writer = new BufferedWriter(new FileWriter(filename + ".nrb"));
-               writer.write("nurbs" + "\n"
-                                      + "degreeU " + degreeU + "\n"
-                                      + "degreeV " + degreeV + "\n"
+               writer.write("nurbs" + System.lineSeparator()
+                                      + "degreeU " + degreeU + System.lineSeparator()
+                                      + "degreeV " + degreeV + System.lineSeparator()
                                       + "end_header");
+               writer.newLine();
                for (Double i : knotsU) {
                     writer.write(i + " ");
                }
@@ -30,7 +31,7 @@ public class NRBWriter {
                writer.newLine();
                for (ArrayList<WPoint3D> i : controlNet) {
                     for (WPoint3D j : i) {
-                         writer.write(j.getX() + " " + j.getY() + " " + j.getZ() + " " + j.getWeight() + "-");
+                         writer.write(j.getX() + " " + j.getY() + " " + j.getZ() + " " + j.getWeight() + "x");
                     }
                     writer.newLine();
                }

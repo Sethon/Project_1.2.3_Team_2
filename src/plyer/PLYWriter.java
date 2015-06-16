@@ -15,14 +15,14 @@ public class PLYWriter {
 			ArrayList<Point3D> vertices = fvpm.vertices();
 			ArrayList<Triangle3D> faces = fvpm.triangulate();
 			BufferedWriter writer = new BufferedWriter(new FileWriter(filename + ".ply"));
-			writer.write("ply" + "\n" 
-					+ "format ascii 1.0" + "\n"
-					+ "element vertex " + vertices.size() + "\n"
-					+ "property double64 x" + "\n"
-					+ "property double64 y" + "\n"
-					+ "property double64 z" + "\n"
-					+ "element face " + faces.size() + "\n"
-					+ "property list int16 int16 vertex_indices" + "\n"
+			writer.write("ply" + System.lineSeparator()
+					+ "format ascii 1.0" + System.lineSeparator()
+					+ "element vertex " + vertices.size() + System.lineSeparator()
+					+ "property double64 x" + System.lineSeparator()
+					+ "property double64 y" + System.lineSeparator()
+					+ "property double64 z" + System.lineSeparator()
+					+ "element face " + faces.size() + System.lineSeparator()
+					+ "property list int16 int16 vertex_indices" + System.lineSeparator()
 					+ "end_header");
 			for (Point3D v : vertices) {
 				writer.newLine();

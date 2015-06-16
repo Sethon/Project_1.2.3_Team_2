@@ -25,7 +25,6 @@ public class NRBReader {
                BufferedReader br = new BufferedReader(new FileReader(filename));
                String line;
                while (!(line = br.readLine()).equals("end_header")) {
-                    //System.out.println(line);
                     if (line.contains("degreeU")) {
                          String[] split = line.split(" ");
                          degreeU = Integer.parseInt(split[1]);
@@ -45,7 +44,7 @@ public class NRBReader {
 
                while (!(line = br.readLine()).equals("end_file")) {
                     ArrayList<WPoint3D> pList = new ArrayList<>();
-                    split = line.split("-");
+                    split = line.split("x");
                     for (String i : split) {
                          String[] j = i.split(" ");
                          pList.add(new WPoint3D(         Double.parseDouble(j[0]),
@@ -53,6 +52,8 @@ public class NRBReader {
                                                          Double.parseDouble(j[2]),
                                                          Double.parseDouble(j[3])));
                     }
+                    for (WPoint3D i : pList)
+                         System.out.println(i.toString());
                     controlNet.add(pList);
                }
                br.close();
