@@ -44,7 +44,7 @@ public class FVPolygonMesh extends PolygonMesh {
 	}
 
 	@Override
-	public void addVertex(Point3D p) {
+	public void addVertex(Point3D p, String instruct) {
 		if (vertices.size() <= 1) {
 			vertices.add(p);
 			verticesToFaces.add(new ArrayList<>());

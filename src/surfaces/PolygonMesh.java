@@ -14,5 +14,5 @@ public abstract class PolygonMesh extends EditableSurface {
 	public abstract ArrayList<Triangle3D> triangulate();
 	
 	@Override
-	public abstract void addVertex(Point3D p);
+	public abstract void addVertex(Point3D p, String instruct);
 }

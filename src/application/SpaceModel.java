@@ -147,11 +147,11 @@ public class SpaceModel {
 		}
 	}
 	
-	public void addVertex(double x, double y, double z, String label) {
+	public void addVertex(double x, double y, double z, String label, String instruct) {
 		for (int i = 0; i < surfaces.size(); i++) {
 			if (surfaces.get(i).getLabel().equals(label)) {
 				EditableSurface sE = (EditableSurface) surfaces.get(i);
-				sE.addVertex(new Point3D(x, y, z));
+				sE.addVertex(new Point3D(x, y, z), instruct);
 				frame.replaceStructure(i , surfaces.get(i).triangulate());
 			}
 		}

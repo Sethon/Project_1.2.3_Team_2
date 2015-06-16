@@ -23,6 +23,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import application.SpaceModel;
+import surfaces.NURBS;
 import surfaces.Surface3D;
 
 
@@ -127,34 +128,91 @@ public class ListPanel extends JPanel {
 					break;
 				case ADDITION:
 					if (model.isEditable(currentChoice)) {
-						JTextField xField = new JTextField(5);
-						JTextField yField = new JTextField(5);
-						JTextField zField = new JTextField(5);
+						if (model.isNURBS(currentChoice)) {
+							
+							JTextField xField = new JTextField(5);
+							JTextField yField = new JTextField(5);
+							JTextField zField = new JTextField(5);
 
-						JPanel myPanel = new JPanel();
-						myPanel.setLayout(new GridLayout(6, 1));
-						myPanel.add(new JLabel("x = "));
-						myPanel.add(xField);
-						myPanel.add(new JLabel("y = "));
-						myPanel.add(yField);
-						myPanel.add(new JLabel("z = "));
-						myPanel.add(zField);
+							JTextField wField = new JTextField(5);
+							
+							JPanel myPanel = new JPanel();
+							
+							JRadioButton b1 = new JRadioButton(NURBS.U);
+							b1.setSelected(true);
+							myPanel.add(b1);
+							JRadioButton b2 = new JRadioButton(NURBS.V);
+							myPanel.add(b2);
+							ButtonGroup bG = new ButtonGroup();
+							bG.add(b1);
+							bG.add(b2);
+							
+							myPanel.setLayout(new GridLayout(12, 1));
+							myPanel.add(new JLabel("x = "));
+							myPanel.add(xField);
+							myPanel.add(new JLabel("y = "));
+							myPanel.add(yField);
+							myPanel.add(new JLabel("z = "));
+							myPanel.add(zField);
+							myPanel.add(new JLabel("W = "));
+							myPanel.add(wField);
+							
+							int result = JOptionPane.showConfirmDialog(null, myPanel, 
+									"Enter coordinates", JOptionPane.OK_CANCEL_OPTION);
+							if (result == JOptionPane.OK_OPTION) {
+								String axis = "";
+								if (b1.isSelected()) {
+									axis = 	NURBS.U;
+								} 
+								else if (b2.isSelected()) {
+									axis = NURBS.V;
+								}
+								String regexDecimal = "^-?\\d*\\.\\d+$";
+								String regexInteger = "^-?\\d+$";
+								String regexDouble = regexDecimal + "|" + regexInteger;
+								String x = xField.getText();
+								String y = yField.getText();
+								String z = zField.getText();
+								String w = wField.getText();
+								if (x.matches(regexDouble) && y.matches(regexDouble) &&
+										z.matches(regexDouble)) {
+									double xCoord = Double.parseDouble(x);
+									double yCoord = Double.parseDouble(y);
+									double zCoord = Double.parseDouble(z);
+									model.addVertex(xCoord, yCoord, zCoord, currentChoice, axis);
+								}
+							}
+						} else {
+							JTextField xField = new JTextField(5);
+							JTextField yField = new JTextField(5);
+							JTextField zField = new JTextField(5);
 
-						int result = JOptionPane.showConfirmDialog(null, myPanel, 
-								"Enter coordinates", JOptionPane.OK_CANCEL_OPTION);
-						if (result == JOptionPane.OK_OPTION) {
-							String regexDecimal = "^-?\\d*\\.\\d+$";
-							String regexInteger = "^-?\\d+$";
-							String regexDouble = regexDecimal + "|" + regexInteger;
-							String x = xField.getText();
-							String y = yField.getText();
-							String z = zField.getText();
-							if (x.matches(regexDouble) && y.matches(regexDouble) &&
-									z.matches(regexDouble)) {
-								double xCoord = Double.parseDouble(x);
-								double yCoord = Double.parseDouble(y);
-								double zCoord = Double.parseDouble(z);
-								model.addVertex(xCoord, yCoord, zCoord, currentChoice);
+							JPanel myPanel = new JPanel();
+							
+							myPanel.setLayout(new GridLayout(6, 1));
+							myPanel.add(new JLabel("x = "));
+							myPanel.add(xField);
+							myPanel.add(new JLabel("y = "));
+							myPanel.add(yField);
+							myPanel.add(new JLabel("z = "));
+							myPanel.add(zField);
+
+							int result = JOptionPane.showConfirmDialog(null, myPanel, 
+									"Enter coordinates", JOptionPane.OK_CANCEL_OPTION);
+							if (result == JOptionPane.OK_OPTION) {
+								String regexDecimal = "^-?\\d*\\.\\d+$";
+								String regexInteger = "^-?\\d+$";
+								String regexDouble = regexDecimal + "|" + regexInteger;
+								String x = xField.getText();
+								String y = yField.getText();
+								String z = zField.getText();
+								if (x.matches(regexDouble) && y.matches(regexDouble) &&
+										z.matches(regexDouble)) {
+									double xCoord = Double.parseDouble(x);
+									double yCoord = Double.parseDouble(y);
+									double zCoord = Double.parseDouble(z);
+									model.addVertex(xCoord, yCoord, zCoord, currentChoice, null);
+								}
 							}
 						}
 					} else {
@@ -164,7 +222,6 @@ public class ListPanel extends JPanel {
 				case ROTATE:
 					if (model.isEditable(currentChoice)) {
 						JTextField phiField = new JTextField(4);
-
 						JPanel myPanel = new JPanel();
 						myPanel.setLayout(new GridLayout(5, 1));
 						JRadioButton b1 = new JRadioButton("X");
