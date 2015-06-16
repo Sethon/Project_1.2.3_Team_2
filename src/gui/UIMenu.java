@@ -12,6 +12,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
+import javax.swing.ToolTipManager;
 
 import application.SpaceModel;
 import plyer.PLYReader;
@@ -41,6 +43,9 @@ public class UIMenu extends JMenuBar implements ActionListener {
 
 
 	public UIMenu(GLFrame frame, SpaceModel model) {
+		JPopupMenu.setDefaultLightWeightPopupEnabled(false);
+		ToolTipManager.sharedInstance().setLightWeightPopupEnabled(false);
+		
 		this.frame = frame;
 		this.model = model;
 		
