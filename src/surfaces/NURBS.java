@@ -11,6 +11,8 @@ public class NURBS extends EditableSurface {
      private int degreeV;
      private int nU;
      private int nV;
+     public static final String U = "U";
+     public static final String V = "V";
 
      public NURBS(int degreeU, int degreeV) {
           instCnt++;
@@ -342,6 +344,31 @@ public class NURBS extends EditableSurface {
                nV++;
           }
      }
+
+     public int getDegreeU() {
+          return degreeU;
+     }
+
+     public int getDegreeV() {
+          return degreeV;
+     }
+
+     public int getnU() {
+          return nU;
+     }
+
+     public int getnV() {
+          return nV;
+     }
+
+     public ArrayList<Double> getKnotsU() {
+          return knotsU;
+     }
+
+     public ArrayList<Double> getKnotsV() {
+          return knotsV;
+     }
+
 }
 
 //     for (double i : bFU)
