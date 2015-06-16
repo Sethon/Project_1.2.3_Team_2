@@ -7,13 +7,14 @@ public class NURBS extends EditableSurface {
      private ArrayList<Double> knotsU;
      private ArrayList<Double> knotsV;
      private ArrayList<ArrayList<WPoint3D>> controlNet;
-     //private ArrayList<ArrayList<Double>> weights;
      private int degreeU;
      private int degreeV;
      private int nU;
      private int nV;
 
      public NURBS(int degreeU, int degreeV) {
+          instCnt++;
+          assignLabel();
           this.degreeU = degreeU;
           this.degreeV = degreeV;
           nU = 0;
@@ -21,11 +22,11 @@ public class NURBS extends EditableSurface {
           knotsU = new ArrayList<>();
           knotsV = new ArrayList<>();
           controlNet = new ArrayList<>();
-          //weights = new ArrayList<>();
      }
 
      public NURBS(int degreeU, int degreeV, WPoint3D[][] cP, double[] knotsU, double[] knotsV) {
-
+          instCnt++;
+          assignLabel();
           controlNet = new ArrayList<>(cP.length);
           this.knotsU = new ArrayList<>();
           this.knotsV = new ArrayList<>();
@@ -44,7 +45,6 @@ public class NURBS extends EditableSurface {
                this.knotsU.add(i);
           for (double i : knotsV)
                this.knotsV.add(i);
-          System.out.println(surfacePoint(1, 1));
      }
 
      public ArrayList<ArrayList<Point3D>> get() {
@@ -320,7 +320,7 @@ public class NURBS extends EditableSurface {
      }
 
      public void addVertex(WPoint3D p, int direction) {
-//DIRECTION CAN BE 1(U) OR 2(V)
+          //DIRECTION CAN BE 1(U) OR 2(V)
 
           if (controlNet.size() == 0) {
                ArrayList<WPoint3D> curve = new ArrayList<>();
