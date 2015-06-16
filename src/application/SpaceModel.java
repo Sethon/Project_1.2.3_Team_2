@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import surfaces.EditableSurface;
 import surfaces.FVPolygonMesh;
+import surfaces.NURBS;
 import surfaces.Point3D;
 import surfaces.Spiral;
 import surfaces.Surface3D;
@@ -15,7 +16,9 @@ import surfaces.SurfaceUtilities;
 import surfaces.Torus;
 
 public class SpaceModel {
-	private static final int STEP_SURF = 100;
+	private static final int STEP_SURF 			= 100;
+	private static final int U_DEGREE_NURBS 	= 3;
+	private static final int V_DEGREE_NURBS 	= 3;
 	
 	private ArrayList<Surface3D> 	surfaces;
 	private GLFrame 				frame;
@@ -58,6 +61,7 @@ public class SpaceModel {
 			break;
 		case UIMenu.NURBS:
 			held = true;
+			surfaces.add(new NURBS(U_DEGREE_NURBS, V_DEGREE_NURBS));
 			break;
 		case UIMenu.SPIRAL:
 			held = true;
@@ -143,11 +147,11 @@ public class SpaceModel {
 		}
 	}
 	
-	public void addVertex(double x, double y, double z, String label) {
+	public void addVertex(double x, double y, double z, String label, String instruct) {
 		for (int i = 0; i < surfaces.size(); i++) {
 			if (surfaces.get(i).getLabel().equals(label)) {
 				EditableSurface sE = (EditableSurface) surfaces.get(i);
-				sE.addVertex(new Point3D(x, y, z));
+				sE.addVertex(new Point3D(x, y, z), instruct);
 				frame.replaceStructure(i , surfaces.get(i).triangulate());
 			}
 		}
@@ -164,5 +168,18 @@ public class SpaceModel {
 		} else {
 			frame.highlight(null);
 		}
+	}
+	
+	public boolean isNURBS(String label) {
+		for (int i = 0; i < surfaces.size(); i++) {
+			if (surfaces.get(i).getLabel().equals(label)) {
+				if (surfaces.get(i) instanceof NURBS) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		}
+		return false;
 	}
 }
