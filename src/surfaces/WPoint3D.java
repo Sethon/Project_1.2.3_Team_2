@@ -22,10 +22,10 @@ public class WPoint3D extends Point3D {
 
      public WPoint3D add(double x, double y, double z, double weight) {
           return new WPoint3D(
-                                      getX() + x,
-                                      getY() + y,
-                                      getZ() + z,
-                                      getWeight() + weight);
+                                       getX() + x,
+                                       getY() + y,
+                                       getZ() + z,
+                                       getWeight() + weight);
      }
 
      public WPoint3D add(WPoint3D point) {
@@ -34,6 +34,10 @@ public class WPoint3D extends Point3D {
 
      public Point3D convert() {
           return new Point3D(getX()/weight, getY()/weight, getZ()/weight);
+     }
+
+     public WPoint3D transform() {
+          return new WPoint3D(getX() / weight, getY() / weight, getZ() / weight, weight);
      }
 
      public String toString() {

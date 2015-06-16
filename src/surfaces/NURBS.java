@@ -6,8 +6,8 @@ public class NURBS extends EditableSurface {
 
      private ArrayList<Double> knotsU;
      private ArrayList<Double> knotsV;
-     private ArrayList<ArrayList<Point3D>> controlNet;
-     private ArrayList<ArrayList<Double>> weights;
+     private ArrayList<ArrayList<WPoint3D>> controlNet;
+     //private ArrayList<ArrayList<Double>> weights;
      private int degreeU;
      private int degreeV;
      private int nU;
@@ -21,26 +21,22 @@ public class NURBS extends EditableSurface {
           knotsU = new ArrayList<>();
           knotsV = new ArrayList<>();
           controlNet = new ArrayList<>();
-          weights = new ArrayList<>();
+          //weights = new ArrayList<>();
      }
 
      public NURBS(int degreeU, int degreeV, WPoint3D[][] cP, double[] knotsU, double[] knotsV) {
 
           controlNet = new ArrayList<>(cP.length);
-          weights = new ArrayList<>(cP.length);
           this.knotsU = new ArrayList<>();
           this.knotsV = new ArrayList<>();
           this.degreeU = degreeU;
           this.degreeV = degreeV;
           for (int i = 0; i < cP.length; i++) {
-               ArrayList<Point3D> lC = new ArrayList<>();
-               ArrayList<Double> lW = new ArrayList<>();
+               ArrayList<WPoint3D> lC = new ArrayList<>();
                for (int j = 0; j < cP[0].length; j++) {
-                    lC.add(cP[i][j].convert());
-                    lW.add(cP[i][j].getWeight());
+                    lC.add(cP[i][j]);
                }
                controlNet.add(lC);
-               weights.add(lW);
           }
           nU = cP.length;
           nV = cP[0].length;
@@ -48,10 +44,17 @@ public class NURBS extends EditableSurface {
                this.knotsU.add(i);
           for (double i : knotsV)
                this.knotsV.add(i);
+          System.out.println(surfacePoint(1, 1));
      }
 
      public ArrayList<ArrayList<Point3D>> get() {
-          return controlNet;
+          ArrayList<ArrayList<Point3D>> cN = new ArrayList<>();
+          for (ArrayList<WPoint3D> i : controlNet) {
+               ArrayList<Point3D> j = new ArrayList<>();
+               j.addAll(i);
+               cN.add(j);
+          }
+          return cN;
      }
 
      public Point3D getClosest(Point3D p) {
@@ -60,7 +63,7 @@ public class NURBS extends EditableSurface {
           double maxDistance = Double.MAX_VALUE;
           double distance;
 
-          for (ArrayList<Point3D> i : controlNet) {
+          for (ArrayList<WPoint3D> i : controlNet) {
                for (Point3D j : i) {
                     if ((distance = j.dist(p)) < maxDistance) {
                          close = j;
@@ -73,7 +76,7 @@ public class NURBS extends EditableSurface {
 
      private int findKnotSpanU(double u) {
 
-          if (u == knotsU.get(nU + 1)) return nU;
+          if (u == knotsU.get(nU + 1)) return nU - 1;
           int low = degreeU;
           int high = nU + 1;
           int mid = (low + high) / 2;
@@ -90,7 +93,7 @@ public class NURBS extends EditableSurface {
 
      private int findKnotSpanV(double v) {
 
-          if (v == knotsV.get(nV + 1)) return nV;
+          if (v == knotsV.get(nV + 1)) return nV - 1;
           int low = degreeV;
           int high = nV + 1;
           int mid = (low + high) / 2;
@@ -158,17 +161,24 @@ public class NURBS extends EditableSurface {
           for (Double i : knotsV)
                i = i * factor;
      }
-
+     
      public Point3D surfacePoint(double u, double v) {
-          if (u == knotsU.get(nU + degreeU) && v == knotsV.get(nU + degreeU)) return controlNet.get(nU - 1).get(nV - 1);
-
+          
           int knotIndexU = findKnotSpanU(u);
           int knotIndexV = findKnotSpanV(v);
           double[] bFU = basisFunctionsU(u, knotIndexU);
           double[] bFV = basisFunctionsV(v, knotIndexV);
-
-          WPoint3D[][] pW = wPoints(controlNet, weights, knotIndexU, knotIndexV);
-
+          WPoint3D[][] pW;
+          if (u == knotsU.get(nU + degreeU)) {
+               if (v == knotsV.get(nU + degreeU))
+                    return controlNet.get(nU - 1).get(nV - 1);
+               else
+                    pW = wPoints(controlNet, knotIndexU - 1, knotIndexV);
+          } else if (v == knotsV.get(nU + degreeU))
+               pW = wPoints(controlNet, knotIndexU, knotIndexV - 1);
+          else
+               pW = wPoints(controlNet, knotIndexU, knotIndexV);
+          
           WPoint3D rP = new WPoint3D(0, 0, 0, 0);
           WPoint3D[] temp = new WPoint3D[degreeU + 1];
           for (int i = 0; i < pW.length; i++) {
@@ -182,31 +192,61 @@ public class NURBS extends EditableSurface {
           }
           return rP.convert();
      }
+     
+     public Point3D surfacePointi(double u, double v) {
+          
+          int uSpan = findKnotSpanU(u);
+          int vSpan = findKnotSpanV(v);
+          double[] bFU = basisFunctionsU(u, uSpan);
+          double[] bFV = basisFunctionsV(v, vSpan);
+
+          WPoint3D rP = new WPoint3D(0, 0, 0, 0);
+          WPoint3D[] temp = new WPoint3D[degreeU + 1];
+
+          for (int i = 0; i < degreeU + 1; i++) {
+               temp[i] = new WPoint3D(0, 0, 0, 0);
+               for (int j = 0; j < degreeV + 1; j++) {
+                    WPoint3D p = controlNet.get(uSpan - degreeU + i).get(vSpan - degreeV + j);
+                    double w = p.getWeight();
+                    p = p.multiply(w);
+                    p.setWeight(w);
+                    temp[i] = temp[i].add(p.multiply(bFV[j]));
+               }
+          }
+          for (int i = 0; i < temp.length; i++) {
+               rP = rP.add(temp[i].multiply(bFU[i]));
+          }
+          return rP.convert();
+     }
 
      public Point3D[][] getVertices(int steps) {
-
           double u = 0;
           double v = 0;
           double dU = knotsU.get(nU + 1) / steps;
           double dV = knotsV.get(nV + 1) / steps;
+          steps++;
           Point3D[][] vertices = new Point3D[steps][steps];
 
           for (int i = 0; i < steps; i++) {
                for (int j = 0; j < steps; j++) {
-                    vertices[i][j] = (surfacePoint(u, v));
+                    vertices[i][j] = (surfacePointi(u, v));
                     v += dV;
+                    v = Math.round(v * 1000000.0) / 1000000.0;
                }
                u += dU;
+               u = Math.round(u * 1000000.0) / 1000000.0;
                v = 0.0;
           }
+          System.out.println(vertices[steps - 1][steps - 1].toString());
           return vertices;
      }
 
      @Override
      public ArrayList<Triangle3D> triangulate() {
+
           long starttime = System.currentTimeMillis();
           ArrayList<Triangle3D> triangles = new ArrayList<>();
-          Point3D[][] v = getVertices(30);
+          Point3D[][] v = getVertices(50);
           int size = v.length;
 
           for (int i = 0; i < size - 1; i++) {
@@ -218,18 +258,22 @@ public class NURBS extends EditableSurface {
           }
           long endtime = System.currentTimeMillis();
           System.out.println(endtime - starttime);
+          System.out.println(triangles.get(triangles.size() - 1).toString());
+          System.out.println(surfacePoint(1, 1));
           return triangles;
      }
 
-     private WPoint3D[][] wPoints(ArrayList<ArrayList<Point3D>> controlNet, ArrayList<ArrayList<Double>> weights, int uSpan, int vSpan) {
+     private WPoint3D[][] wPoints(ArrayList<ArrayList<WPoint3D>> controlNet, int uSpan, int vSpan) {
 
           WPoint3D[][] pW = new WPoint3D[degreeU + 1][degreeV + 1];
 
           for (int i = 0; i <= degreeU; i++) {
                for (int j = 0; j <= degreeV; j++) {
-                    Point3D p = controlNet.get(uSpan - degreeU + i).get(vSpan - degreeV + j);
-                    double w = weights.get(uSpan - degreeU + i).get(vSpan - degreeV + j);
-                    //pW[i][j] = p.convert(w);
+                    WPoint3D p = controlNet.get(uSpan - degreeU + i).get(vSpan - degreeV + j);
+                    double w = p.getWeight();
+                    p = p.multiply(w);
+                    p.setWeight(w);
+                    pW[i][j] = p;
                }
           }
           return pW;
@@ -238,14 +282,14 @@ public class NURBS extends EditableSurface {
      @Override
      public ArrayList<Point3D> vertices() {
           ArrayList<Point3D> v = new ArrayList<>();
-          Point3D[][] p = getVertices(30);
+          Point3D[][] p = getVertices(40);
           for (Point3D[] i : p)
                for (Point3D j : i)
                     v.add(j);
           return v;
      }
 
-     public ArrayList<ArrayList<Point3D>> getControlNet() {
+     public ArrayList<ArrayList<WPoint3D>> getControlNet() {
           return controlNet;
      }
 
@@ -257,6 +301,46 @@ public class NURBS extends EditableSurface {
      @Override
      public void addVertex(Point3D p) {
 
+     }
+
+     private void addKnot(int direction, double spacing) {
+          //spacing should be a
+          int d;
+          if (direction == 1) {
+               d = knotsU.size() - degreeU;
+               double factor = (d - 1) / (double) d;
+               scaleKnotsU(factor);
+               knotsU.add(d, 1 * factor);
+          } else {
+               d = knotsV.size() - degreeV;
+               double factor = (d - 1) / (double) d;
+               scaleKnotsV(factor);
+               knotsV.add(d, 1 * factor);
+          }
+     }
+
+     public void addVertex(WPoint3D p, int direction) {
+//DIRECTION CAN BE 1(U) OR 2(V)
+
+          if (controlNet.size() == 0) {
+               ArrayList<WPoint3D> curve = new ArrayList<>();
+               curve.add(p);
+               controlNet.add(curve);
+          } else if (direction == 1) {
+               ArrayList<WPoint3D> newU = new ArrayList<>();
+               for (int i = 0; i < nV; i++) {
+                    newU.add(p);
+               }
+               controlNet.add(newU);
+               addKnot(direction, 0.5);
+               nU++;
+          } else {
+               for (ArrayList<WPoint3D> i : controlNet) {
+                    i.add(p);
+               }
+               addKnot(direction, 0.5);
+               nV++;
+          }
      }
 }
 
