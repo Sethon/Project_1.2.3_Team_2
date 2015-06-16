@@ -300,11 +300,6 @@ public class NURBS extends EditableSurface {
           return 0;
      }
 
-     @Override
-     public void addVertex(Point3D p) {
-
-     }
-
      private void addKnot(int direction, double spacing) {
           //spacing should be a
           int d;
@@ -321,26 +316,27 @@ public class NURBS extends EditableSurface {
           }
      }
 
-     public void addVertex(WPoint3D p, int direction) {
+     @Override
+     public void addVertex(Point3D p, String instruct) {
           //DIRECTION CAN BE 1(U) OR 2(V)
 
           if (controlNet.size() == 0) {
                ArrayList<WPoint3D> curve = new ArrayList<>();
-               curve.add(p);
+               curve.add(new WPoint3D(p,1.0));
                controlNet.add(curve);
-          } else if (direction == 1) {
+          } else if (instruct.equals("U")) {
                ArrayList<WPoint3D> newU = new ArrayList<>();
                for (int i = 0; i < nV; i++) {
-                    newU.add(p);
+                    newU.add(new WPoint3D(p,1.0));
                }
                controlNet.add(newU);
-               addKnot(direction, 0.5);
+               addKnot(1, 0.5);
                nU++;
           } else {
                for (ArrayList<WPoint3D> i : controlNet) {
-                    i.add(p);
+                    i.add(new WPoint3D(p,1.0));
                }
-               addKnot(direction, 0.5);
+               addKnot(2, 0.5);
                nV++;
           }
      }

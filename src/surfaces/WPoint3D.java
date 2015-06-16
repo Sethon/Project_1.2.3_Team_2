@@ -8,6 +8,11 @@ public class WPoint3D extends Point3D {
           this.weight = weight;
      }
 
+     public WPoint3D(Point3D p, double weight) {
+          super(p.getX(),p.getY(),p.getZ());
+          this.weight = weight;
+     }
+
      public double getWeight() {
           return weight;
      }
