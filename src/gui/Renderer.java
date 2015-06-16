@@ -48,6 +48,7 @@ MouseWheelListener {
 	private boolean vertices 							= false;
 	private boolean axes								= true;
 	private boolean grid								= false;
+	private boolean highlight							=false;
 
 	private float rotateX;    // rotation amounts about axes, controlled by keyboard
 	private float rotateY;
@@ -223,13 +224,15 @@ MouseWheelListener {
 		}
 
 		//highlight
-		for (Point3D h : highlighted) {
-			gl.glPointSize(10);
-			gl.glBegin (GL.GL_POINTS);
-			gl.glColor3f(0.0f, 1.0f, 1.0f);
-			gl.glVertex3f((float) h.getX()/10.0f, 
-					(float) h.getY()/10.0f, (float) h.getZ()/10.0f);
-			gl.glEnd();	
+		if (highlight) {
+			for (Point3D h : highlighted) {
+				gl.glPointSize(10);
+				gl.glBegin (GL.GL_POINTS);
+				gl.glColor3f(0.0f, 1.0f, 1.0f);
+				gl.glVertex3f((float) h.getX()/10.0f, 
+						(float) h.getY()/10.0f, (float) h.getZ()/10.0f);
+				gl.glEnd();	
+			}
 		}
 	}
 
