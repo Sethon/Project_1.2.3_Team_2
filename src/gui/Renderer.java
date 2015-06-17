@@ -3,6 +3,8 @@ package gui;
 
 
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -19,6 +21,7 @@ import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.glu.GLU;
+import com.jogamp.opengl.util.awt.TextRenderer;
 
 
 public class Renderer implements GLEventListener, KeyListener, MouseMotionListener,
@@ -28,6 +31,7 @@ MouseWheelListener {
 	public final static String RENDER_LINES 			= "Show edges";
 	public final static String RENDER_AXES 				= "Show axes";
 	public final static String RENDER_GRID 				= "Show XY plane";
+	public final static String RENDER_NUMS 				= "Show scaling";
 
 	private final float MAX_Z 							= 100000.0f;	// maximal zoom in 
 	private final float MIN_Z 							= -100000.0f;	
@@ -40,6 +44,7 @@ MouseWheelListener {
 	private ArrayList<ArrayList<Triangle3D>> triangles 	= new ArrayList<>();
 	private ArrayList<Point3D> highlighted				= new ArrayList<>();
 	private GLU glu 									= new GLU();
+	private TextRenderer textRenderer;
 
 	private boolean faces 								= true;
 	private boolean edges 								= true;
@@ -47,6 +52,7 @@ MouseWheelListener {
 	private boolean axes								= true;
 	private boolean grid								= false;
 	private boolean highlight							= false;
+	private boolean nums								= false;
 
 	private float rotateX;    // rotation amounts about axes, controlled by keyboard
 	private float rotateY;
@@ -73,7 +79,7 @@ MouseWheelListener {
 		if (grid) {
 			gl.glBegin(GL2.GL_LINES);
 			gl.glColor3f(0.5f, 0.5f, 0.5f);
-			for (float x = - 50; x <= 50; x += 1.0f) {
+			for (float x = - 50; x <= 50; x += 0.5f) {
 				gl.glVertex3f(x, -50.0f, 0.0f);
 				gl.glVertex3f(x, 50.0f, 0.0f);
 			}
@@ -81,7 +87,7 @@ MouseWheelListener {
 
 			gl.glBegin(GL2.GL_LINES);
 			gl.glColor3f(0.5f, 0.5f, 0.5f);
-			for (float y = - 50; y <= 50; y += 1.0f) {
+			for (float y = - 50; y <= 50; y += 0.5f) {
 				gl.glVertex3f(-50.0f, y, 0.0f);
 				gl.glVertex3f(50.0f, y, 0.0f);
 			}
@@ -186,7 +192,7 @@ MouseWheelListener {
 					gl.glVertex3f((float) ps.get(0).getX()/10.0f, 
 							(float) ps.get(0).getY()/10.0f, (float) ps.get(0).getZ()/10.0f);
 					gl.glEnd();
-					
+
 					/*//normals
 					float x0 = (float) ((ps.get(0).getX() + ps.get(1).getX() + ps.get(2).getX())/3);
 					float y0 = (float) ((ps.get(0).getY() + ps.get(1).getY() + ps.get(2).getY())/3);
@@ -232,6 +238,40 @@ MouseWheelListener {
 				gl.glEnd();	
 			}
 		}
+		if (nums) {
+			for (float x = - 100; x <= 100; x += 1) {
+				if (x != 0) {
+					textRenderer.begin3DRendering();
+					textRenderer.setColor(Color.black);
+					textRenderer.setSmoothing(true);
+					textRenderer.draw3D("" + x, 
+							x/10.0f, 0.01f, 0, 0.001f);	
+					textRenderer.end3DRendering();		
+				}
+			}
+			
+			for (float y = - 100; y <= 100; y += 1) {
+				if (y != 0) {
+					textRenderer.begin3DRendering();
+					textRenderer.setColor(Color.black);
+					textRenderer.setSmoothing(true);
+					textRenderer.draw3D("" + y, 
+							0.01f, y/10.0f, 0, 0.001f);	
+					textRenderer.end3DRendering();	
+				}	
+			}
+			
+			for (float z = - 100; z <= 100; z += 1) {
+				if (z != 0) {
+					textRenderer.begin3DRendering();
+					textRenderer.setColor(Color.black);
+					textRenderer.setSmoothing(true);
+					textRenderer.draw3D("" + z, 
+							0.01f, 0, z/10.0f, 0.001f);	
+					textRenderer.end3DRendering();		
+				}
+			}
+		}
 	}
 
 	public void setTriangles(ArrayList<ArrayList<Triangle3D>> triangles) {
@@ -245,7 +285,8 @@ MouseWheelListener {
 
 	@Override
 	public void init(GLAutoDrawable arg0) {
-		final GL2 gl = arg0.getGL().getGL2(); 
+		final GL2 gl = arg0.getGL().getGL2();
+		textRenderer = new TextRenderer(new Font("Cambria", Font.BOLD, 20));
 		gl.glShadeModel(GL2.GL_SMOOTH); 
 		gl.glClearColor(0.9f, 0.95f, 1.0f, 1.0f); 
 		gl.glClearDepth(1.0f); 
@@ -366,6 +407,9 @@ MouseWheelListener {
 			break;
 		case RENDER_GRID:
 			grid = flag;
+			break;
+		case RENDER_NUMS:
+			nums = flag;
 			break;
 		}
 	}

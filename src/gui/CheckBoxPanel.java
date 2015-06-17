@@ -37,9 +37,13 @@ public class CheckBoxPanel extends JPanel implements ActionListener {
 		JCheckBox chB5 = new JCheckBox(Renderer.RENDER_GRID);
 		chB5.addActionListener(this);
 		chB5.setFocusable(false);
+		JCheckBox chB6 = new JCheckBox(Renderer.RENDER_NUMS);
+		chB6.addActionListener(this);
+		chB6.setFocusable(false);
 		this.add(chB1);
 		this.add(chB2);
 		this.add(chB4);
+		this.add(chB6);
 		this.add(chB5);
 		this.add(chB3);
 		
