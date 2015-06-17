@@ -210,7 +210,6 @@ public class NURBS extends EditableSurface {
                u = Math.round(u * 1000000.0) / 1000000.0;
                v = 0.0;
           }
-          System.out.println(vertices[steps - 1][steps - 1].toString());
           return vertices;
      }
 
@@ -218,7 +217,6 @@ public class NURBS extends EditableSurface {
      public ArrayList<Triangle3D> triangulate() {
 
           if (controlNet.size() == 0) return new ArrayList<>();
-          long starttime = System.currentTimeMillis();
           ArrayList<Triangle3D> triangles = new ArrayList<>();
           Point3D[][] v = getVertices(50);
           int size = v.length;
@@ -229,9 +227,6 @@ public class NURBS extends EditableSurface {
                     triangles.add(new Triangle3D(v[i + 1][j], v[i][j + 1], v[i + 1][j + 1]));
                }
           }
-          long endtime = System.currentTimeMillis();
-          System.out.println(endtime - starttime);
-          System.out.println(triangles.get(triangles.size() - 1).toString());
           return triangles;
      }
 
@@ -312,7 +307,6 @@ public class NURBS extends EditableSurface {
 
      @Override
      public void addVertex(Point3D p, String instruct) {
-          printStuff();
           if (controlNet.size() == 0) {
                ArrayList<WPoint3D> curve = new ArrayList<>();
                curve.add(new WPoint3D(p, 1.0));
@@ -332,13 +326,11 @@ public class NURBS extends EditableSurface {
                addKnot(2, 0.5);
                nV++;
           }
-          printStuff();
      }
 
      @Override
      public void add2Vertices(Point3D p1, Point3D p2, String instruct, double w) {
 
-          printStuff();
           if (controlNet.size() == 0) {
                initiateNurbs(new WPoint3D(p1, w), new WPoint3D(p2, w));
           } else if (instruct.equals("U")) {
@@ -362,7 +354,6 @@ public class NURBS extends EditableSurface {
                addKnot(2, 0.5);
                nV++;
           }
-          printStuff();
      }
 
      private WPoint3D lerp(WPoint3D p1, WPoint3D p2, double spacing) {
