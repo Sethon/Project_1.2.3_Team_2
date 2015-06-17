@@ -34,7 +34,7 @@ MouseWheelListener {
 	private final float MAX_Z 							= 100000.0f;	// maximal zoom in 
 	private final float MIN_Z 							= -100000.0f;	
 
-	private float translateZ 							= 0.0f; 	// z-location
+	private float translateZ 							= -10.0f; 	// z-location
 	private float translateX 							= 0.0f; 	
 	private float translateY 							= 0.0f; 	
 	private float rotateSpeedXIncrement 				= 10;     // adjusting x rotational speed
@@ -48,7 +48,7 @@ MouseWheelListener {
 	private boolean vertices 							= false;
 	private boolean axes								= true;
 	private boolean grid								= false;
-	private boolean highlight							=false;
+	private boolean highlight							= false;
 
 	private float rotateX;    // rotation amounts about axes, controlled by keyboard
 	private float rotateY;

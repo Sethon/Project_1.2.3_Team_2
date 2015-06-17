@@ -163,4 +163,26 @@ public class FVPolygonMesh extends PolygonMesh {
 		}
 	
 	}
+
+	@Override
+	public void add2Vertices(Point3D p1, Point3D p2, String instruct, double w) {
+		addVertex(p1, null);
+		addVertex(p2, null);
+	}
+
+	@Override
+	public void add3Vertices(Point3D p1, Point3D p2, Point3D p3,
+			String instruct, double w) {
+		vertices.add(p1);
+		verticesToFaces.add(new ArrayList<>());
+		vertices.add(p2);
+		verticesToFaces.add(new ArrayList<>());
+		vertices.add(p3);
+		verticesToFaces.add(new ArrayList<>());
+		Triangle3D face = new Triangle3D(p1, p2, p3);
+		faces.add(face);
+		verticesToFaces.get(verticesToFaces.size() - 1).add(face);
+		verticesToFaces.get(verticesToFaces.size() - 2).add(face);
+		verticesToFaces.get(verticesToFaces.size() - 3).add(face);
+	}
 }
