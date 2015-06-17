@@ -100,6 +100,16 @@ public class SpaceModel {
 		}
 		return tmp;
 	}
+	
+	public ArrayList<NURBS> getNURBSList() {
+		ArrayList<NURBS> tmp = new ArrayList<>();
+		for (Surface3D s : surfaces) {
+			if (s instanceof NURBS) {
+				tmp.add((NURBS) s);
+			}
+		}
+		return tmp;
+	}
 
 	public String getSurfaceInfo(String label) {
 		String info = "";

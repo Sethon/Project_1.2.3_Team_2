@@ -16,6 +16,8 @@ import javax.swing.JPopupMenu;
 import javax.swing.ToolTipManager;
 
 import application.SpaceModel;
+import plyer.NRBReader;
+import plyer.NRBWriter;
 import plyer.PLYReader;
 import plyer.PLYWriter;
 import surfaces.FVPolygonMesh;
@@ -110,29 +112,46 @@ public class UIMenu extends JMenuBar implements ActionListener {
 		JMenuItem mItem = (JMenuItem) e.getSource();
 		switch (mItem.getText()) {
 		case LOADING:
-			 FileDialog fdL = new FileDialog(frame, "Load .ply file", FileDialog.LOAD);
+			 FileDialog fdL = new FileDialog(frame, "Load File", FileDialog.LOAD);
 			 fdL.setFilenameFilter(new PLYFilter());
              fdL.setVisible(true);
-             String meshModel1 = fdL.getFile();
-             if (meshModel1 != null) {
-            	 meshModel1 = fdL.getDirectory() + meshModel1;
-            	 PLYReader plyR = new PLYReader(FACTOR);
-            	 model.addSurface(plyR.getFVMesh(meshModel1));
+             String model1 = fdL.getFile();
+             if (model1 != null) {
+            	 if (model1.contains(".ply")) {
+            		 model1 = fdL.getDirectory() + model1;
+                	 PLYReader plyR = new PLYReader(FACTOR);
+                	 model.addSurface(plyR.getFVMesh(model1)); 
+            	 }
+            	 else if (model1.contains(".nrb")) {
+            		 model1 = fdL.getDirectory() + model1;
+                	 NRBReader nrbR = new NRBReader(FACTOR);
+                	 model.addSurface(nrbR.getNURBS(model1)); 
+            	 }
              }
 			break;
 		case SAVING:
-			FileDialog fdS = new FileDialog(frame, "Save .ply file", FileDialog.SAVE);
+			FileDialog fdS = new FileDialog(frame, "Save File", FileDialog.SAVE);
             fdS.setVisible(true);
-            String meshModel2 = fdS.getFile();
-            if (meshModel2 != null) {
-            	meshModel2 = fdS.getDirectory() + meshModel2;
+            String model2 = fdS.getFile();
+            if (model2 != null) {
+            	model2 = fdS.getDirectory() + model2;
             	PLYWriter plyW = new PLYWriter();
             	ArrayList<FVPolygonMesh> tmp = model.getMeshList();
             	for (int i = 0; i < tmp.size(); i++) {
             		if (i > 0) {
-            			plyW.writeFVMesh(meshModel2 + i, tmp.get(i));
+            			plyW.writeFVMesh(model2 + i, tmp.get(i));
             		} else {
-            			plyW.writeFVMesh(meshModel2, tmp.get(i));
+            			plyW.writeFVMesh(model2, tmp.get(i));
+            		}	
+            	}
+            	
+            	NRBWriter nrbW = new NRBWriter();
+            	ArrayList<surfaces.NURBS> tmpN = model.getNURBSList();
+            	for (int i = 0; i < tmpN.size(); i++) {
+            		if (i > 0) {
+            			nrbW.writeNURBS(model2 + i, tmpN.get(i));
+            		} else {
+            			nrbW.writeNURBS(model2, tmpN.get(i));
             		}	
             	}
             }
@@ -161,7 +180,7 @@ public class UIMenu extends JMenuBar implements ActionListener {
 	
 	private class PLYFilter implements FilenameFilter {
 		 public boolean accept(File dir, String name) {
-			 return name.contains(".ply");
+			 return name.contains(".ply") || name.contains(".nrb");
 		 }
 	 }
 }

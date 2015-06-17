@@ -11,8 +11,6 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.util.ArrayList;
 
-import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
-
 import surfaces.Point3D;
 import surfaces.Triangle3D;
 
