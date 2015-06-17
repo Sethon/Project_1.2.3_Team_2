@@ -217,6 +217,7 @@ public class NURBS extends EditableSurface {
      @Override
      public ArrayList<Triangle3D> triangulate() {
 
+          if (controlNet.size() == 0) return new ArrayList<>();
           long starttime = System.currentTimeMillis();
           ArrayList<Triangle3D> triangles = new ArrayList<>();
           Point3D[][] v = getVertices(50);
@@ -269,25 +270,25 @@ public class NURBS extends EditableSurface {
      }
 
      public void scaleKnotsU(double factor) {
-          for (int i = degreeU+1; i < nU; i++) {
-               knotsU.set(i, knotsU.get(i)*factor);
+          for (int i = degreeU + 1; i < nU; i++) {
+               knotsU.set(i, knotsU.get(i) * factor);
           }
      }
 
      public void scaleKnotsV(double factor) {
-          for (int i = degreeV+1; i < nV; i++) {
-               knotsV.set(i, knotsV.get(i)*factor);
+          for (int i = degreeV + 1; i < nV; i++) {
+               knotsV.set(i, knotsV.get(i) * factor);
           }
      }
 
      public void makeUniform() {
-          double startU = 1/(double)(nU-(degreeU+1));
-          for (int i = degreeU+1; i < nU; i++) {
+          double startU = 1 / (double) (nU - (degreeU + 1));
+          for (int i = degreeU + 1; i < nU; i++) {
                knotsU.set(i, startU);
                startU += startU;
           }
-          double startV = 1/(double)(nV-(degreeV+1));
-          for (int i = degreeV+1; i < nV; i++) {
+          double startV = 1 / (double) (nV - (degreeV + 1));
+          for (int i = degreeV + 1; i < nV; i++) {
                knotsV.set(i, startV);
                startV += startV;
           }
@@ -297,12 +298,12 @@ public class NURBS extends EditableSurface {
           //spacing should be a
           int d;
           if (direction == 1) {
-               d = knotsU.size() - 2*degreeU;
+               d = knotsU.size() - 2 * degreeU;
                double factor = (d - 1) / (double) d;
                scaleKnotsU(factor);
                knotsU.add(nU, 1 * factor);
           } else {
-               d = knotsV.size() - 2*degreeV;
+               d = knotsV.size() - 2 * degreeV;
                double factor = (d - 1) / (double) d;
                scaleKnotsV(factor);
                knotsV.add(nV, 1 * factor);
@@ -314,19 +315,19 @@ public class NURBS extends EditableSurface {
           printStuff();
           if (controlNet.size() == 0) {
                ArrayList<WPoint3D> curve = new ArrayList<>();
-               curve.add(new WPoint3D(p,1.0));
+               curve.add(new WPoint3D(p, 1.0));
                controlNet.add(curve);
           } else if (instruct.equals("U")) {
                ArrayList<WPoint3D> newU = new ArrayList<>();
                for (int i = 0; i < nV; i++) {
-                    newU.add(new WPoint3D(p,1.0));
+                    newU.add(new WPoint3D(p, 1.0));
                }
                controlNet.add(newU);
                addKnot(1, 0.5);
                nU++;
           } else {
                for (ArrayList<WPoint3D> i : controlNet) {
-                    i.add(new WPoint3D(p,1.0));
+                    i.add(new WPoint3D(p, 1.0));
                }
                addKnot(2, 0.5);
                nV++;
@@ -339,22 +340,20 @@ public class NURBS extends EditableSurface {
 
           printStuff();
           if (controlNet.size() == 0) {
-               ArrayList<WPoint3D> curve = new ArrayList<>();
-               //curve.add(new WPoint3D(p,1.0));
-               controlNet.add(curve);
+               initiateNurbs(new WPoint3D(p1, w), new WPoint3D(p2, w));
           } else if (instruct.equals("U")) {
                ArrayList<WPoint3D> newU = new ArrayList<>();
-               newU.add(new WPoint3D(p1,w));
-               double spacing = 1/(double)nU;
-               for (int i = 0; i < nU-1; i++, spacing+= spacing ) {
-                    newU.add(lerp(new WPoint3D(p1,w),new WPoint3D(p2,w),spacing));
+               newU.add(new WPoint3D(p1, w));
+               double spacing = 1 / (double) nU;
+               for (int i = 0; i < nU - 1; i++, spacing += spacing) {
+                    newU.add(lerp(new WPoint3D(p1, w), new WPoint3D(p2, w), spacing));
                }
-               newU.add(new WPoint3D(p2,w));
+               newU.add(new WPoint3D(p2, w));
                controlNet.add(newU);
                addKnot(1, 0.5);
                nU++;
           } else {
-               double spacing = 1/(double)nV;
+               double spacing = 1 / (double) nV;
                double startSpacing = 0;
                for (ArrayList<WPoint3D> i : controlNet) {
                     i.add(lerp(new WPoint3D(p1, w), new WPoint3D(p2, w), startSpacing));
@@ -368,6 +367,52 @@ public class NURBS extends EditableSurface {
 
      private WPoint3D lerp(WPoint3D p1, WPoint3D p2, double spacing) {
           return p1.add(p2.subtract(p1).multiply(spacing));
+     }
+
+     private void initiateNurbs(WPoint3D p1, WPoint3D p3) {
+          nU = degreeU + 1;
+          nV = degreeV + 1;
+          for (int j = 0; j < nU; j++) {
+               knotsU.add(0.0);
+          }
+          for (int j = 0; j < nU; j++) {
+               knotsU.add(1.0);
+          }
+          for (int j = 0; j < nV; j++) {
+               knotsV.add(0.0);
+          }
+          for (int j = 0; j < nV; j++) {
+               knotsV.add(1.0);
+          }
+          for (int i = 0; i < nU; i++)
+               controlNet.add(new ArrayList<>());
+
+          WPoint3D p2 = new WPoint3D(p1.getX(), p1.getY(), p3.getZ(), p1.getWeight());
+          WPoint3D p4 = new WPoint3D(p3.getX(), p3.getY(), p1.getZ(), p2.getWeight());
+          double spacing = 1 / (double) nU;
+          double startSpacing = 0;
+          for (ArrayList<WPoint3D> i : controlNet) {
+               i.add(lerp(p1, p2, startSpacing));
+               startSpacing += spacing;
+          }
+          WPoint3D[] left = new WPoint3D[nV];
+          WPoint3D[] right = new WPoint3D[nV];
+          spacing = 1 / (double) nV;
+          startSpacing = 0;
+          for (int i = 0; i < nV; i++, startSpacing += spacing) {
+               left[i] = lerp(p2, p3, startSpacing);
+          }
+          startSpacing = 0;
+          for (int i = 0; i < nV; i++, startSpacing += spacing) {
+               right[i] = lerp(p1, p4, startSpacing);
+          }
+          spacing = 1/ (double) nU;
+          for (int i = 0; i < nV - 1; i++) {
+               startSpacing = 0;
+               for (int j = 0; j < nU; j++, startSpacing += spacing) {
+                    controlNet.get(j).add(lerp(right[i], left[i], startSpacing));
+               }
+          }
      }
 
      @Override
@@ -410,6 +455,19 @@ public class NURBS extends EditableSurface {
                System.out.println(i);
      }
 
+     public String toString() {
+          StringBuilder sb = new StringBuilder();
+          sb.append("NURBS Surface" + System.lineSeparator());
+          sb.append("Degree U: " + degreeU + " Degree V: " + degreeV + System.lineSeparator());
+          sb.append("Controlpoints along U: " + nU + " Controlpoints along V: " + nV + System.lineSeparator());
+          sb.append("Knots U: ");
+          for (Double i : knotsU)
+               sb.append(i + " ");
+          sb.append(System.lineSeparator() + "Knots V: ");
+          for (Double i : knotsV)
+               sb.append(i + " ");
+          return sb.toString();
+     }
 }
 
 //     for (double i : bFU)

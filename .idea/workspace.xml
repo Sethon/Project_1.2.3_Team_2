@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e36f3706-3cf2-4175-96de-9dc2a13a8bd6" name="Default" comment="">
+      <change type="DELETED" beforePath="C:\Users\x\Documents\Project_1.2.3_Team_2\bin\gui\ListPanel$2.class" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/application/BeyondLand.class" afterPath="$PROJECT_DIR$/bin/application/BeyondLand.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/gui/CheckBoxPanel.class" afterPath="$PROJECT_DIR$/bin/gui/CheckBoxPanel.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/testing/ConvergenceTest.class" afterPath="$PROJECT_DIR$/bin/testing/ConvergenceTest.class" />
@@ -11,7 +12,6 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/gui/GLFrame.class" afterPath="$PROJECT_DIR$/bin/gui/GLFrame.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/surfaces/Labelizable.class" afterPath="$PROJECT_DIR$/bin/surfaces/Labelizable.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/gui/ListPanel$1.class" afterPath="$PROJECT_DIR$/bin/gui/ListPanel$1.class" />
-      <change type="MODIFICATION" beforePath="C:\Users\x\Documents\Project_1.2.3_Team_2\bin\gui\ListPanel$2.class" afterPath="C:\Users\x\Documents\Project_1.2.3_Team_2\bin\gui\ListPanel$2.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/gui/ListPanel.class" afterPath="$PROJECT_DIR$/bin/gui/ListPanel.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/plyer/NRBReader.class" afterPath="$PROJECT_DIR$/bin/plyer/NRBReader.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/plyer/NRBWriter.class" afterPath="$PROJECT_DIR$/bin/plyer/NRBWriter.class" />
@@ -33,7 +33,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/gui/UIMenu.class" afterPath="$PROJECT_DIR$/bin/gui/UIMenu.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/surfaces/WPoint3D.class" afterPath="$PROJECT_DIR$/bin/surfaces/WPoint3D.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/surfaces/NURBS.java" afterPath="$PROJECT_DIR$/src/surfaces/NURBS.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/surfaces/WPoint3D.java" afterPath="$PROJECT_DIR$/src/surfaces/WPoint3D.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/application/SpaceModel.java" afterPath="$PROJECT_DIR$/src/application/SpaceModel.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Project_1.2.3_Team_2.iws" />
@@ -56,16 +56,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="PLYWriter.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/plyer/PLYWriter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="34" column="43" selection-start-line="34" selection-start-column="43" selection-end-line="34" selection-end-column="43" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="NRBWriter.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/plyer/NRBWriter.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -78,22 +68,15 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PLYReader.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/plyer/PLYReader.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="35" column="53" selection-start-line="35" selection-start-column="53" selection-end-line="35" selection-end-column="53" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="UIMenu.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/gui/UIMenu.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="131" column="32" selection-start-line="131" selection-start-column="32" selection-end-line="131" selection-end-column="32" />
-              <folding />
+              <caret line="150" column="32" selection-start-line="150" selection-start-column="32" selection-end-line="150" selection-end-column="32" />
+              <folding>
+                <element signature="imports" expanded="false" />
+                <element signature="e#5921#5922#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -122,7 +105,7 @@
         <entry file="file://$PROJECT_DIR$/src/application/SpaceModel.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="185" column="54" selection-start-line="185" selection-start-column="54" selection-end-line="185" selection-end-column="54" />
+              <caret line="197" column="0" selection-start-line="197" selection-start-column="0" selection-end-line="197" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -132,7 +115,7 @@
         <entry file="file://$PROJECT_DIR$/src/gui/ListPanel.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="191" column="51" selection-start-line="191" selection-start-column="51" selection-end-line="191" selection-end-column="51" />
+              <caret line="258" column="0" selection-start-line="258" selection-start-column="0" selection-end-line="258" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -141,8 +124,28 @@
       <file leaf-file-name="NURBS.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/surfaces/NURBS.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="10.811089">
-              <caret line="355" column="18" selection-start-line="355" selection-start-column="18" selection-end-line="355" selection-end-column="18" />
+            <state vertical-scroll-proportion="0.59958935">
+              <caret line="459" column="34" selection-start-line="459" selection-start-column="34" selection-end-line="459" selection-end-column="34" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GLFrame.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/gui/GLFrame.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="92" column="0" selection-start-line="92" selection-start-column="0" selection-end-line="92" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ParametricSurface3D.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/surfaces/ParametricSurface3D.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="17" column="67" selection-start-line="17" selection-start-column="67" selection-end-line="17" selection-end-column="67" />
               <folding />
             </state>
           </provider>
@@ -185,9 +188,9 @@
         <option value="$PROJECT_DIR$/src/plyer/PLYWriter.java" />
         <option value="$PROJECT_DIR$/src/plyer/NRBWriter.java" />
         <option value="$PROJECT_DIR$/src/plyer/NRBReader.java" />
-        <option value="$PROJECT_DIR$/src/application/SpaceModel.java" />
         <option value="$PROJECT_DIR$/src/gui/UIMenu.java" />
         <option value="$PROJECT_DIR$/src/surfaces/WPoint3D.java" />
+        <option value="$PROJECT_DIR$/src/application/SpaceModel.java" />
         <option value="$PROJECT_DIR$/src/surfaces/NURBS.java" />
       </list>
     </option>
@@ -591,6 +594,14 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USER_GROUPS">
+      <collection />
+    </option>
+    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+      <collection />
+    </option>
+  </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
@@ -615,14 +626,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/GLFrame.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="22" column="13" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
           <folding />
         </state>
       </provider>
@@ -776,8 +779,11 @@
     <entry file="file://$PROJECT_DIR$/src/gui/UIMenu.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="131" column="32" selection-start-line="131" selection-start-column="32" selection-end-line="131" selection-end-column="32" />
-          <folding />
+          <caret line="150" column="32" selection-start-line="150" selection-start-column="32" selection-end-line="150" selection-end-column="32" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#5921#5922#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -805,10 +811,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/surfaces/ParametricSurface3D.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="17" column="67" selection-start-line="17" selection-start-column="67" selection-end-line="17" selection-end-column="67" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/GLFrame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="92" column="0" selection-start-line="92" selection-start-column="0" selection-end-line="92" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/application/SpaceModel.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="185" column="54" selection-start-line="185" selection-start-column="54" selection-end-line="185" selection-end-column="54" />
+          <caret line="197" column="0" selection-start-line="197" selection-start-column="0" selection-end-line="197" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -816,15 +838,15 @@
     <entry file="file://$PROJECT_DIR$/src/gui/ListPanel.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="191" column="51" selection-start-line="191" selection-start-column="51" selection-end-line="191" selection-end-column="51" />
+          <caret line="258" column="0" selection-start-line="258" selection-start-column="0" selection-end-line="258" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/surfaces/NURBS.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="10.811089">
-          <caret line="355" column="18" selection-start-line="355" selection-start-column="18" selection-end-line="355" selection-end-column="18" />
+        <state vertical-scroll-proportion="0.59958935">
+          <caret line="459" column="34" selection-start-line="459" selection-start-column="34" selection-end-line="459" selection-end-column="34" />
           <folding />
         </state>
       </provider>
