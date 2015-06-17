@@ -37,6 +37,18 @@ public class WPoint3D extends Point3D {
           return add(point.getX(), point.getY(), point.getZ(), point.getWeight());
      }
 
+     public WPoint3D subtract(double x, double y, double z, double weight) {
+          return new WPoint3D(
+                                       getX() - x,
+                                       getY() - y,
+                                       getZ() - z,
+                                       getWeight() - weight);
+     }
+
+     public WPoint3D subtract(WPoint3D point) {
+          return subtract(point.getX(), point.getY(), point.getZ(), point.getWeight());
+     }
+
      public Point3D convert() {
           return new Point3D(getX()/weight, getY()/weight, getZ()/weight);
      }

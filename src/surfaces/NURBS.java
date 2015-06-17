@@ -253,8 +253,7 @@ public class NURBS extends EditableSurface {
      @Override
      public ArrayList<Point3D> vertices() {
           ArrayList<Point3D> v = new ArrayList<>();
-          Point3D[][] p = getVertices(40);
-          for (Point3D[] i : p)
+          for (ArrayList<WPoint3D> i : controlNet)
                for (Point3D j : i)
                     v.add(j);
           return v;
@@ -312,7 +311,6 @@ public class NURBS extends EditableSurface {
 
      @Override
      public void addVertex(Point3D p, String instruct) {
-          //DIRECTION CAN BE 1(U) OR 2(V)
           printStuff();
           if (controlNet.size() == 0) {
                ArrayList<WPoint3D> curve = new ArrayList<>();
@@ -334,6 +332,47 @@ public class NURBS extends EditableSurface {
                nV++;
           }
           printStuff();
+     }
+
+     @Override
+     public void add2Vertices(Point3D p1, Point3D p2, String instruct, double w) {
+
+          printStuff();
+          if (controlNet.size() == 0) {
+               ArrayList<WPoint3D> curve = new ArrayList<>();
+               //curve.add(new WPoint3D(p,1.0));
+               controlNet.add(curve);
+          } else if (instruct.equals("U")) {
+               ArrayList<WPoint3D> newU = new ArrayList<>();
+               newU.add(new WPoint3D(p1,w));
+               double spacing = 1/(double)nU;
+               for (int i = 0; i < nU-1; i++, spacing+= spacing ) {
+                    newU.add(lerp(new WPoint3D(p1,w),new WPoint3D(p2,w),spacing));
+               }
+               newU.add(new WPoint3D(p2,w));
+               controlNet.add(newU);
+               addKnot(1, 0.5);
+               nU++;
+          } else {
+               double spacing = 1/(double)nV;
+               double startSpacing = 0;
+               for (ArrayList<WPoint3D> i : controlNet) {
+                    i.add(lerp(new WPoint3D(p1, w), new WPoint3D(p2, w), startSpacing));
+                    startSpacing += spacing;
+               }
+               addKnot(2, 0.5);
+               nV++;
+          }
+          printStuff();
+     }
+
+     private WPoint3D lerp(WPoint3D p1, WPoint3D p2, double spacing) {
+          return p1.add(p2.subtract(p1).multiply(spacing));
+     }
+
+     @Override
+     public void add3Vertices(Point3D p1, Point3D p2, Point3D p3, String instruct, double w) {
+
      }
 
      public int getDegreeU() {
