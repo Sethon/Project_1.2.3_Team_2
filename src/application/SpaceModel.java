@@ -10,9 +10,10 @@ import surfaces.*;
 
 public class SpaceModel {
 
-	private static final int STEP_SURF = 100;
-	private static final int U_DEGREE_NURBS = 3;
-	private static final int V_DEGREE_NURBS = 3;
+	private static final int STEP_SURF 			= 100;
+	private static final int U_DEGREE_NURBS 	= 3;
+	private static final int V_DEGREE_NURBS 	= 3;
+	private static final int CLARK_ITERATIONS 	= 1;
 
 	private ArrayList<Surface3D> surfaces;
 	private GLFrame frame;
@@ -164,6 +165,20 @@ public class SpaceModel {
 				frame.replaceStructure(i, surfaces.get(i).triangulate());
 			}
 		}
+	}
+	
+	public String clarkinate(String label) {
+		for (int i = 0; i < surfaces.size(); i++) {
+			if (surfaces.get(i).getLabel().equals(label)) {
+				FVPolygonMesh sE = (FVPolygonMesh) surfaces.get(i);
+				FVPolygonMesh tmp = SurfaceUtilities.applyCCsubDivision(sE, CLARK_ITERATIONS);
+				surfaces.remove(i);
+				surfaces.add(i, tmp);
+				frame.replaceStructure(i, surfaces.get(i).triangulate());
+				return tmp.getLabel();
+			}
+		}
+		return null;
 	}
 
 	public void addVertex(double x, double y, double z, String label, String instruct) {

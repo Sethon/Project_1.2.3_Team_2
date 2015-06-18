@@ -60,4 +60,11 @@ public abstract class SurfaceUtilities {
 			v.setZ(v.getZ() + delta);
 		}
 	}
+	
+	public static FVPolygonMesh applyCCsubDivision(FVPolygonMesh pm, int iterations) {
+		Clarkinator callumClark = new Clarkinator(pm);
+		callumClark.subdivide(iterations);
+		FVPolygonMesh ans = callumClark.getMesh();
+		return ans;
+	}
 }
