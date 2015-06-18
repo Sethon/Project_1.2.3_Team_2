@@ -253,4 +253,21 @@ public class SpaceModel {
 		}
 		return false;
 	}
+	
+	public EditableSurface getEditableSurface(String label) {
+		for (int i = 0; i < surfaces.size(); i++) {
+			if (surfaces.get(i).getLabel().equals(label)) {
+				if (surfaces.get(i) instanceof EditableSurface) {
+					return (EditableSurface) surfaces.get(i);
+				} else {
+					return null;
+				}
+			}
+		}
+		return null;
+	}
+	
+	public void update() {
+		
+	}
 }

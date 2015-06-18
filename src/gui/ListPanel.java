@@ -23,6 +23,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import application.SpaceModel;
+import surfaces.EditableSurface;
 import surfaces.NURBS;
 import surfaces.Surface3D;
 
@@ -30,6 +31,7 @@ import surfaces.Surface3D;
 public class ListPanel extends JPanel {
 
 	private static final String INFO 				= "Info";
+	private static final String VERTEX 				= "Point list";
 	private static final String REMOVAL 			= "Remove";
 	private static final String ADDITION 			= "Add unit";
 	private static final String ROTATE 				= "Rotate";
@@ -99,6 +101,9 @@ public class ListPanel extends JPanel {
 		JMenuItem item1 = new JMenuItem(INFO);
 		item1.addActionListener(itemListener);
 		popUp.add(item1);
+		JMenuItem item7 = new JMenuItem(VERTEX);
+		item7.addActionListener(itemListener);
+		popUp.add(item7);
 		JMenuItem item2 = new JMenuItem(REMOVAL);
 		item2.addActionListener(itemListener);
 		popUp.add(item2);
@@ -492,6 +497,16 @@ public class ListPanel extends JPanel {
 					surfaceList.setListData(arr);
 				} else {
 					throwWrongSurfDialogClark();
+				}
+				break;
+			case VERTEX:
+				EditableSurface eS = model.getEditableSurface(currentChoice);
+				if (eS != null) {
+					VertexTable vT = new VertexTable(eS, model);
+					Thread t = new Thread(vT);
+					t.start();
+				} else {
+					throwWrongSurfDialog();
 				}
 				break;
 			}
