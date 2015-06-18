@@ -99,6 +99,7 @@ public class VertexTable extends JFrame implements Runnable {
 						}
 					}
 				}
+				model.updateStructure(surface.getLabel());
 			}
 		});
 	}

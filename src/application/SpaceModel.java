@@ -267,7 +267,15 @@ public class SpaceModel {
 		return null;
 	}
 	
-	public void update() {
-		
+	public void updateStructure(String label) {
+		for (int i = 0; i < surfaces.size(); i++) {
+			if (surfaces.get(i).getLabel().equals(label)) {
+				EditableSurface sE = (EditableSurface) surfaces.get(i);
+				if (sE instanceof NURBS) {
+					frame.replaceStructure(i, surfaces.get(i).triangulate());
+					return;
+				}
+			}
+		}
 	}
 }
