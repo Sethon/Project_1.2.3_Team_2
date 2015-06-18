@@ -108,6 +108,7 @@ public class VertexTable extends JFrame implements Runnable {
 	public void run() {
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setResizable(false);
+		this.setTitle("Vertices List");
 		this.setVisible(true);
 	}
 }
