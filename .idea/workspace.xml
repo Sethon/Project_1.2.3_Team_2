@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e36f3706-3cf2-4175-96de-9dc2a13a8bd6" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/surfaces/ClarkCell.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/surfaces/Clarkinator.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/gui/VertexTable.java" />
       <change type="DELETED" beforePath="C:\Users\x\Documents\Project_1.2.3_Team_2\bin\gui\ListPanel$2.class" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/application/BeyondLand.class" afterPath="$PROJECT_DIR$/bin/application/BeyondLand.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/gui/CheckBoxPanel.class" afterPath="$PROJECT_DIR$/bin/gui/CheckBoxPanel.class" />
@@ -18,7 +18,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/gui/ListPanel.class" afterPath="$PROJECT_DIR$/bin/gui/ListPanel.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/plyer/NRBReader.class" afterPath="$PROJECT_DIR$/bin/plyer/NRBReader.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/plyer/NRBWriter.class" afterPath="$PROJECT_DIR$/bin/plyer/NRBWriter.class" />
-      <change type="MODIFICATION" beforePath="C:\Users\x\Documents\Project_1.2.3_Team_2\bin\surfaces\NURBS.class" afterPath="C:\Users\x\Documents\Project_1.2.3_Team_2\bin\surfaces\NURBS.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/surfaces/NURBS.class" afterPath="$PROJECT_DIR$/bin/surfaces/NURBS.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/plyer/PLYReader.class" afterPath="$PROJECT_DIR$/bin/plyer/PLYReader.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/plyer/PLYWriter.class" afterPath="$PROJECT_DIR$/bin/plyer/PLYWriter.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/surfaces/ParametricSurface3D.class" afterPath="$PROJECT_DIR$/bin/surfaces/ParametricSurface3D.class" />
@@ -35,10 +35,13 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/gui/UIMenu$PLYFilter.class" afterPath="$PROJECT_DIR$/bin/gui/UIMenu$PLYFilter.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/gui/UIMenu.class" afterPath="$PROJECT_DIR$/bin/gui/UIMenu.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/surfaces/WPoint3D.class" afterPath="$PROJECT_DIR$/bin/surfaces/WPoint3D.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/surfaces/EditableSurface.java" afterPath="$PROJECT_DIR$/src/surfaces/EditableSurface.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/surfaces/FVPolygonMesh.java" afterPath="$PROJECT_DIR$/src/surfaces/FVPolygonMesh.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/gui/ListPanel.java" afterPath="$PROJECT_DIR$/src/gui/ListPanel.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/surfaces/NURBS.java" afterPath="$PROJECT_DIR$/src/surfaces/NURBS.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/surfaces/Point3D.java" afterPath="$PROJECT_DIR$/src/surfaces/Point3D.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/surfaces/PolygonMesh.java" afterPath="$PROJECT_DIR$/src/surfaces/PolygonMesh.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/application/SpaceModel.java" afterPath="$PROJECT_DIR$/src/application/SpaceModel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/surfaces/SurfaceUtilities.java" afterPath="$PROJECT_DIR$/src/surfaces/SurfaceUtilities.java" />
     </list>
     <ignored path="Project_1.2.3_Team_2.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -94,11 +97,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SpaceModel.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="SpaceModel.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/application/SpaceModel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="188" column="31" selection-start-line="188" selection-start-column="31" selection-end-line="188" selection-end-column="31" />
+            <state vertical-scroll-proportion="1.1913358">
+              <caret line="50" column="31" selection-start-line="50" selection-start-column="31" selection-end-line="50" selection-end-column="31" />
               <folding />
             </state>
           </provider>
@@ -108,21 +111,19 @@
         <entry file="file://$PROJECT_DIR$/src/gui/ListPanel.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="258" column="0" selection-start-line="258" selection-start-column="0" selection-end-line="258" selection-end-column="0" />
+              <caret line="267" column="0" selection-start-line="267" selection-start-column="0" selection-end-line="267" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="false" />
-                <element signature="e#3904#3905#0" expanded="false" />
-                <element signature="e#3929#3930#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="NURBS.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="NURBS.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/surfaces/NURBS.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.936823">
-              <caret line="265" column="45" selection-start-line="265" selection-start-column="45" selection-end-line="265" selection-end-column="45" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="612" column="37" selection-start-line="612" selection-start-column="37" selection-end-line="612" selection-end-column="37" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -713,8 +714,6 @@
           <caret line="258" column="0" selection-start-line="258" selection-start-column="0" selection-end-line="258" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="false" />
-            <element signature="e#3904#3905#0" expanded="false" />
-            <element signature="e#3929#3930#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -831,6 +830,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="26" column="6" selection-start-line="26" selection-start-column="6" selection-end-line="26" selection-end-column="6" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -982,11 +982,9 @@
     <entry file="file://$PROJECT_DIR$/src/gui/ListPanel.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="258" column="0" selection-start-line="258" selection-start-column="0" selection-end-line="258" selection-end-column="0" />
+          <caret line="267" column="0" selection-start-line="267" selection-start-column="0" selection-end-line="267" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="false" />
-            <element signature="e#3904#3905#0" expanded="false" />
-            <element signature="e#3929#3930#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1028,21 +1026,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/application/SpaceModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="188" column="31" selection-start-line="188" selection-start-column="31" selection-end-line="188" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/surfaces/NURBS.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.936823">
-          <caret line="265" column="45" selection-start-line="265" selection-start-column="45" selection-end-line="265" selection-end-column="45" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="612" column="37" selection-start-line="612" selection-start-column="37" selection-end-line="612" selection-end-column="37" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/application/SpaceModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.1913358">
+          <caret line="50" column="31" selection-start-line="50" selection-start-column="31" selection-end-line="50" selection-end-column="31" />
+          <folding />
         </state>
       </provider>
     </entry>
