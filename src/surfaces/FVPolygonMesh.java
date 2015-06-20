@@ -185,4 +185,8 @@ public class FVPolygonMesh extends PolygonMesh {
 		verticesToFaces.get(verticesToFaces.size() - 2).add(face);
 		verticesToFaces.get(verticesToFaces.size() - 3).add(face);
 	}
+	
+	public ArrayList<ArrayList<Triangle3D>> vertsToFaces() {
+		return verticesToFaces;
+	}
 }

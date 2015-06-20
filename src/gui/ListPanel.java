@@ -23,6 +23,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import application.SpaceModel;
+import surfaces.EditableSurface;
 import surfaces.NURBS;
 import surfaces.Surface3D;
 
@@ -30,10 +31,12 @@ import surfaces.Surface3D;
 public class ListPanel extends JPanel {
 
 	private static final String INFO 				= "Info";
+	private static final String VERTEX 				= "Point list";
 	private static final String REMOVAL 			= "Remove";
 	private static final String ADDITION 			= "Add unit";
 	private static final String ROTATE 				= "Rotate";
 	private static final String TRANSLATE 			= "Translate";
+	private static final String CLARK 				= "Apply CC";
 
 	private static final double ONE_RAD				= 57.2957795;
 
@@ -98,6 +101,9 @@ public class ListPanel extends JPanel {
 		JMenuItem item1 = new JMenuItem(INFO);
 		item1.addActionListener(itemListener);
 		popUp.add(item1);
+		JMenuItem item7 = new JMenuItem(VERTEX);
+		item7.addActionListener(itemListener);
+		popUp.add(item7);
 		JMenuItem item2 = new JMenuItem(REMOVAL);
 		item2.addActionListener(itemListener);
 		popUp.add(item2);
@@ -110,6 +116,9 @@ public class ListPanel extends JPanel {
 		JMenuItem item5 = new JMenuItem(TRANSLATE);
 		item5.addActionListener(itemListener);
 		popUp.add(item5);
+		JMenuItem item6 = new JMenuItem(CLARK);
+		item6.addActionListener(itemListener);
+		popUp.add(item6);
 	}
 
 	public void addSurface(Surface3D s) {
@@ -468,12 +477,51 @@ public class ListPanel extends JPanel {
 				}
 
 				break;
+			case CLARK:
+				if (model.isFVPolyMesh(currentChoice)) {
+					String l = model.clarkinate(currentChoice);
+					String[] arr = new String[surfaceList.getModel().getSize()];
+					boolean located = false;
+					for (int i = 0; i < surfaceList.getModel().getSize(); i++) {
+						if (!surfaceList.getModel().getElementAt(i).equals(currentChoice)) {
+							if (!located) {
+								arr[i] = surfaceList.getModel().getElementAt(i);
+							} else {
+								arr[i - 1] = surfaceList.getModel().getElementAt(i);
+							}
+						} else {
+							located = true;
+						}
+					}
+					arr[arr.length - 1] = l;
+					surfaceList.setListData(arr);
+				} else {
+					throwWrongSurfDialogClark();
+				}
+				break;
+			case VERTEX:
+				EditableSurface eS = model.getEditableSurface(currentChoice);
+				Surface3D s = (Surface3D) eS;
+				if (eS != null) {
+					VertexTable vT = new VertexTable(s, model);
+					Thread t = new Thread(vT);
+					t.start();
+				} else {
+					throwWrongSurfDialog();
+				}
+				break;
 			}
 		}
 
 		private void throwWrongSurfDialog() {
 			JOptionPane.showMessageDialog(null, 
 					"Surface is not dynamically editable!",
+					"Wrong Surface", JOptionPane.ERROR_MESSAGE);
+		}
+		
+		private void throwWrongSurfDialogClark() {
+			JOptionPane.showMessageDialog(null, 
+					"Surface is not a mesh!",
 					"Wrong Surface", JOptionPane.ERROR_MESSAGE);
 		}
 
