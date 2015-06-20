@@ -78,7 +78,7 @@ public class NURBS extends Surface3D implements EditableSurface {
           for (ArrayList<Point3D> i : points) {
                ArrayList<WPoint3D> l = new ArrayList<>();
                for (Point3D j : i) {
-                    l.add(new WPoint3D(j, 1));
+                    l.add(new WPoint3D(j, 1.0));
                }
                controlNet.add(l);
           }
