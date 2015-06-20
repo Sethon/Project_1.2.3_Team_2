@@ -50,7 +50,18 @@ public class Point3D {
 				(p3d.getY() <= y + 10E-14) && (p3d.getY() >= y - 10E-14) && 
 				(p3d.getZ() <= z + 10E-14) && (p3d.getZ() >= z - 10E-14);
 	}
-	
+
+	public Point3D subtract(double x, double y, double z) {
+		return new Point3D(
+							    getX() - x,
+							    getY() - y,
+							    getZ() - z);
+	}
+
+	public Point3D subtract(Point3D point) {
+		return subtract(point.getX(), point.getY(), point.getZ());
+	}
+
 	public Point3D clone() {
 		return new Point3D(x, y, z);
 	}

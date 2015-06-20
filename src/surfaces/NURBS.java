@@ -1,5 +1,7 @@
 package surfaces;
 
+import org.apache.commons.math3.linear.*;
+
 import java.util.ArrayList;
 
 public class NURBS extends EditableSurface {
@@ -59,6 +61,28 @@ public class NURBS extends EditableSurface {
           this.knotsV = knotsV;
           nU = cP.size();
           nV = cP.get(0).size();
+     }
+
+     public NURBS(int degreeU, int degreeV, ArrayList<ArrayList<Point3D>> points) {
+          instCnt++;
+          assignLabel();
+          this.degreeU = degreeU;
+          this.degreeV = degreeV;
+          controlNet = weightNet(surfaceInterpolation(points));
+          nU = controlNet.size();
+          nV = controlNet.get(0).size();
+     }
+
+     private ArrayList<ArrayList<WPoint3D>> weightNet(ArrayList<ArrayList<Point3D>> points) {
+          ArrayList<ArrayList<WPoint3D>> controlNet = new ArrayList<>();
+          for (ArrayList<Point3D> i : points) {
+               ArrayList<WPoint3D> l = new ArrayList<>();
+               for (Point3D j : i) {
+                    l.add(new WPoint3D(j, 1));
+               }
+               controlNet.add(l);
+          }
+          return controlNet;
      }
 
      public ArrayList<ArrayList<Point3D>> get() {
@@ -223,9 +247,11 @@ public class NURBS extends EditableSurface {
 
           for (int i = 0; i < size - 1; i++) {
                for (int j = 0; j < size - 1; j++) {
+                    //System.out.print(v[i][j].toString() + " ");
                     triangles.add(new Triangle3D(v[i][j], v[i + 1][j], v[i][j + 1]));
                     triangles.add(new Triangle3D(v[i + 1][j], v[i][j + 1], v[i + 1][j + 1]));
                }
+               //System.out.println();
           }
           return triangles;
      }
@@ -397,13 +423,206 @@ public class NURBS extends EditableSurface {
           for (int i = 0; i < nV; i++, startSpacing += spacing) {
                right[i] = lerp(p1, p4, startSpacing);
           }
-          spacing = 1/ (double) nU;
+          spacing = 1 / (double) nU;
           for (int i = 0; i < nV - 1; i++) {
                startSpacing = 0;
                for (int j = 0; j < nU; j++, startSpacing += spacing) {
                     controlNet.get(j).add(lerp(right[i], left[i], startSpacing));
                }
           }
+     }
+
+     private int findKnotSpan(double u, ArrayList<Double> knots, int degree) {
+
+          int n = knots.size() - degree - 1;
+          if (u == knots.get(n + 1)) return n - 1;
+          int low = degree;
+          int high = n + 1;
+          int mid = (low + high) / 2;
+
+          while (u < knots.get(mid) || u >= knots.get(mid + 1)) {
+               if (u < knots.get(mid))
+                    high = mid;
+               else
+                    low = mid;
+               mid = (low + high) / 2;
+          }
+          return mid;
+     }
+
+     private double[] basisFunctions(ArrayList<Double> knots, double u, int index, int degree, int n) {
+          double[] bF = new double[degree + 1];
+          double[] left = new double[degree + 1];
+          double[] right = new double[degree + 1];
+          bF[0] = 1.0;
+
+          for (int i = 1; i <= degree; i++) {
+               left[i] = u - knots.get(index + 1 - i);
+               right[i] = knots.get(index + i) - u;
+               double saved = 0.0;
+
+               for (int j = 0; j < i; j++) {
+                    double temp = bF[j] / (right[j + 1] + left[i - j]);
+                    bF[j] = saved + right[j + 1] * temp;
+                    saved = left[i - j] * temp;
+                    saved = Math.round(saved * 1000000)/1000000.0;
+               }
+               bF[i] = saved;
+          }
+          double[] N = new double[n];
+          for (int i = index - degree; i < index + 1; i++) {
+               N[i] = bF[i - index + degree];
+          }
+          return N;
+     }
+
+     private double[] chordLengthPara(ArrayList<Point3D> points) {
+          double length = 0;
+          int pSize = points.size();
+          double[] paras = new double[pSize];
+          for (int i = 0; i < pSize - 1; i++) {
+               length += points.get(i).dist(points.get(i + 1));
+          }
+          if (length == 0.0) {
+               double spacing = 1/(double) pSize;
+               for (int i = 1; i < pSize-1; i++) {
+                    paras[i] = spacing;
+                    spacing += spacing;
+               }
+          }
+          paras[0] = 0.0;
+          for (int i = 1; i < pSize-1; i++) {
+               double l = 0;
+               for (int j = 1; j <= i; j++) {
+                    l += points.get(j).dist(points.get(j - 1));
+               }
+               l = (1 / length) * l;
+               paras[i] = Math.round(l * 1000000000)/1000000000.0;
+          }
+          paras[pSize-1] = 1.0;
+          return paras;
+     }
+
+     private ArrayList<Double> genKnotV(double[] paras, int degree) {
+          ArrayList<Double> knots = new ArrayList<>();
+          int m = paras.length + degree + 1;
+          for (int i = 0; i <= degree; i++) {
+               knots.add(0.0);
+          }
+          for (int i = 1; i < paras.length - degree; i++) {
+               double av = 0.0;
+               for (int j = i; j <= i + degree - 1; j++) {
+                    av += paras[j];
+               }
+               knots.add((1 / (double) degree) * av);
+          }
+          for (int i = 0; i <= degree; i++) {
+               knots.add(1.0);
+          }
+          return knots;
+     }
+
+     private void params(double[] s, double[] t, ArrayList<ArrayList<Point3D>> points) {
+          int m = points.size();
+          int n = points.get(0).size();
+
+          double[][] paras = new double[n][m];
+          ArrayList<ArrayList<Point3D>> interPoints = new ArrayList<>();
+          for (int j = 0; j < n; j++) {
+               ArrayList<Point3D> inter = new ArrayList<>();
+               for (int i = 0; i < m; i++) {
+                    inter.add(points.get(i).get(j));
+               }
+               paras[j] = chordLengthPara(inter);
+          }
+          for (int j = 0; j < m; j++) {
+               double av = 0.0;
+               for (int i = 0; i < n; i++) {
+                    av += paras[i][j];
+               }
+               s[j] = av/(double) n;
+          }
+          paras = new double[m][n];
+          for (int i = 0; i < m; i++) {
+               paras[i] = chordLengthPara(points.get(i));
+          }
+          for (int j = 0; j < n; j++) {
+               double av = 0.0;
+               for (int i = 0; i < m; i++) {
+                    av += paras[i][j];
+               }
+               t[j] = av/(double) m;
+          }
+          knotsU = genKnotV(s,degreeU);
+          knotsV = genKnotV(t,degreeV);
+     }
+
+     private ArrayList<ArrayList<Point3D>> surfaceInterpolation(ArrayList<ArrayList<Point3D>> points) {
+          int m = points.size();
+          int n = points.get(0).size();
+          double[] s = new double[m];
+          double[] t = new double[n];
+
+          params(s, t, points);
+
+          ArrayList<ArrayList<Point3D>> interPoints = new ArrayList<>();
+          for (int j = 0; j < n; j++) {
+               ArrayList<Point3D> inter = new ArrayList<>();
+               for (int i = 0; i < m; i++) {
+                    inter.add(points.get(i).get(j));
+               }
+               interPoints.add(curveInterpolation(inter, s, knotsU, degreeU));
+          }
+
+          points.clear();
+          for (int j = 0; j < m; j++) {
+               ArrayList<Point3D> inter = new ArrayList<>();
+               for (int i = 0; i < n; i++) {
+                    inter.add(interPoints.get(i).get(j));
+               }
+               points.add(curveInterpolation(inter, t, knotsV, degreeV));
+          }
+          return points;
+
+     }
+
+     public ArrayList<Point3D> curveInterpolation(ArrayList<Point3D> points, double[] params, ArrayList<Double> knots, int degree) {
+          int n = params.length;
+
+          double[][] N = new double[n][n];
+          for (int i = 0; i < n; i++) {
+               int kI = findKnotSpan(params[i], knots, degree);
+               N[i] = basisFunctions(knots, params[i], kI, degree, n);
+          }
+          for (int i = 0; i < N.length; i++) {
+               for (int j = 0; j < N[0].length; j++) {
+                    System.out.print(N[i][j] + " ");
+               }
+               System.out.println();
+          }
+
+          RealMatrix NN = MatrixUtils.createRealMatrix(N);
+          NN = MatrixUtils.inverse(NN);
+          double[] x = new double[n];
+          double[] y = new double[n];
+          double[] z = new double[n];
+          int count = 0;
+          for (Point3D i : points) {
+               x[count] = i.getX();
+               y[count] = i.getY();
+               z[count++] = i.getZ();
+          }
+          RealVector DX = MatrixUtils.createRealVector(x);
+          RealVector DY = MatrixUtils.createRealVector(y);
+          RealVector DZ = MatrixUtils.createRealVector(z);
+          double[] px = NN.operate(DX).toArray();
+          double[] py = NN.operate(DY).toArray();
+          double[] pz = NN.operate(DZ).toArray();
+          ArrayList<Point3D> newPoints = new ArrayList<>();
+          for (int i = 0; i < n; i++) {
+               newPoints.add(new Point3D(px[i], py[i], pz[i]));
+          }
+          return newPoints;
      }
 
      @Override
@@ -460,247 +679,3 @@ public class NURBS extends EditableSurface {
           return sb.toString();
      }
 }
-
-//     for (double i : bFU)
-//                                  System.out.println(i);
-//     System.out.println();
-//     for (double i : bFV)
-//                                  System.out.println(i);
-//     System.out.println();
-//     //Helper.print2D(pW);
-//     System.out.println();
-//     System.out.println(temp[i].toString());
-//     System.out.println();
-//     System.out.println(rP.toString());
-
-
-//     public void insertKnot(double u, double v) {
-//
-//          int knotIndex = findKnotSpan(t);
-//          if (knotIndex >= n) return;
-//
-//          ArrayList<Point3D> newPoints = new ArrayList<>();
-//          ArrayList<Double> newWeights = new ArrayList<>();
-//          WPoint3D[] pW;
-//          pW = wPoints(controlNet, weights, knotIndex - degree, knotIndex);
-//
-//          for (int i = 1; i <= degree; i++) {
-//               double ui = knots.get(knotIndex - degree + i);
-//               double a = (t - ui) / (knots.get(knotIndex + i) - ui);
-//               WPoint3D p = pW[i - 1].multiply(1 - a).add(pW[i].multiply(a));
-//               newWeights.add(p.getWeight());
-//               newPoints.add(p.convert());
-//          }
-//          int index = 0;
-//          for (int i = knotIndex - degree + 1; i < knotIndex; i++) {
-//               controlNet.set(i, newPoints.get(index));
-//               weights.set(i, newWeights.get(index++));
-//          }
-//          controlNet.add(knotIndex, newPoints.get(degree - 1));
-//          weights.add(knotIndex, newWeights.get(degree - 1));
-//          knots.add(knotIndex + 1, t);
-//          n++;
-//     }
-//
-//     public void refineKnots() {
-//
-//          ArrayList<Point3D> newPoints = new ArrayList<>();
-//          ArrayList<Double> newWeights = new ArrayList<>();
-//          int s = knots.size() - 2 * degree - 1;
-//          int a = degree;
-//          for (int j = 0; j < s; j++) {
-//               double t = (knots.get(a) + knots.get(a + 1)) / 2.0;
-//               WPoint3D[] pW = wPoints(controlNet, weights, a - degree, a);
-//
-//               for (int i = 1; i <= degree; i++) {
-//                    double ui = knots.get(a - degree + i);
-//                    double factor = (t - ui) / (knots.get(a + i) - ui);
-//                    WPoint3D p = pW[i - 1].multiply(1 - factor).add(pW[i].multiply(factor));
-//                    newWeights.add(p.getWeight());
-//                    newPoints.add(p.convert());
-//               }
-//               int index = 0;
-//               for (int i = a - degree + 1; i < a; i++) {
-//                    controlNet.set(i, newPoints.get(index));
-//                    weights.set(i, newWeights.get(index++));
-//               }
-//               controlNet.add(a, newPoints.get(degree - 1));
-//               weights.add(a, newWeights.get(degree - 1));
-//               knots.add(a + 1, t);
-//               n++;
-//               a += 2;
-//               newPoints.clear();
-//               newWeights.clear();
-//          }
-//     }
-//
-//     public ArrayList<Point3D> getRefined(int precision) {
-//
-//          ArrayList<Double> knots = new ArrayList<>();
-//          knots.addAll(this.knots);
-//          ArrayList<Double> weights = new ArrayList<>();
-//          weights.addAll(this.weights);
-//          ArrayList<Point3D> controlNet = new ArrayList<>();
-//          controlNet.addAll(this.controlNet);
-//
-//          for (int x = 0; x < precision; x++) {
-//
-//               ArrayList<Point3D> newPoints = new ArrayList<>();
-//               ArrayList<Double> newWeights = new ArrayList<>();
-//               int s = knots.size() - 2 * degree - 1;
-//               int a = degree;
-//               for (int j = 0; j < s; j++) {
-//                    double t = (knots.get(a) + knots.get(a + 1)) / 2.0;
-//                    WPoint3D[] pW = wPoints(controlNet, weights, a - degree, a);
-//
-//                    for (int i = 1; i <= degree; i++) {
-//                         double ui = knots.get(a - degree + i);
-//                         double factor = (t - ui) / (knots.get(a + i) - ui);
-//                         WPoint3D p = pW[i - 1].multiply(1 - factor).add(pW[i].multiply(factor));
-//                         newWeights.add(p.getWeight());
-//                         newPoints.add(p.convert());
-//                    }
-//                    int index = 0;
-//                    for (int i = a - degree + 1; i < a; i++) {
-//                         controlNet.set(i, newPoints.get(index));
-//                         weights.set(i, newWeights.get(index++));
-//                    }
-//                    controlNet.add(a, newPoints.get(degree - 1));
-//                    weights.add(a, newWeights.get(degree - 1));
-//                    knots.add(a + 1, t);
-//                    a += 2;
-//                    newPoints.clear();
-//                    newWeights.clear();
-//               }
-//          }
-//          return controlNet;
-//     }
-
-
-//     public void drawControl(Graphics2D g2, double nodeRadius, float lineWidth) {
-//
-//          if (n > 1) {
-//               for (int i = 0; i < n - 1; i++)
-//                    Point3D.drawLine(g2, controlNet.get(i), controlNet.get(i + 1), lineWidth);
-//          }
-//          g2.setColor(new Color(76, 76, 226));
-//          for (int i = 0; i < n; i++) {
-//               controlNet.get(i).draw(g2, nodeRadius);
-//          }
-//     }
-//
-//     public void drawCurve(Graphics2D g2, int steps, float lineWidth) {
-//
-//          double d = knots.get(n + 1) / steps;
-//          double val = 0.0;
-//          if (n > 1) {
-//               for (double t = knots.get(degree); t < steps - 1; t++) {
-//                    Point3D.drawLine(g2, curvePoint(val), curvePoint(val + d), lineWidth);
-//                    val += d;
-//               }
-//               Point3D.drawLine(g2, curvePoint(val), curvePoint(knots.get(n + degree)), lineWidth);
-//          }
-//          length();
-//     }
-
-//     private double length(ArrayList<Point3D> points) {
-//
-//          double len = 0.0;
-//
-//          for (int i = 0; i < points.size() - 1; i++)
-//               len += points.get(i).dist(points.get(i + 1));
-//          return len;
-//     }
-
-//     public void set(int i, int j, Point3D point) {
-//
-//          controlNet.get(i).get(j).setLocation(point.getX(), point.getY());
-//     }
-
-//     private double clength(ArrayList<Point3D> points) {
-//          double starttime = System.currentTimeMillis();
-//          double length = length(points);
-//          double endtime = System.currentTimeMillis();
-//          System.out.println(endtime - starttime);
-//          return length;
-//     }
-//
-//     public void length() {
-//          System.out.println("straight: " + controlNet.get(0).distance(controlNet.get(n - 1)));
-//          System.out.println(clength(getRefined(3)));
-//     }
-
-//     public Point2D closestIndex(Point3D cP, Point3D newCP) {
-//          int cUSize = controlNet.size();
-//          int cVSize = controlNet.get(0).size();
-//          if (cUSize == 1 && cVSize == 1)
-//               return null;
-//          int countU = 0;
-//          int countV = 0;
-//          for (ArrayList<Point3D> i : controlNet) {
-//               for (Point3D j : i) {
-//                    if (j.equals(cP)) {
-//                         double d1; double d2; double d3; double d4;
-//                         if (countU == 0) {
-//                              if (countV == 0) {
-//                                   return new Point2D.Double(0, 0);
-//                              } else if (countV == cVSize - 1) {
-//                                   return new Point2D.Double(countU, cVSize - 1);
-//                              } else {
-//                                   d1 = newCP.distance(controlNet.get(countU).get(countV+1));
-//                                   d2 = newCP.distance(controlNet.get(countU).get(countV));
-//                                   if (d1 < d2)
-//                                        return new Point2D.Double(countU, countV+1);
-//                                   else
-//                                        return new Point2D.Double(countU, countV);
-//                              }
-//                         } else if (countV == 0) {
-//                              if (countU == cUSize - 1) return new Point2D.Double()
-//                              }
-//                         }
-//                         if (countU == cUSize - 1) return cUSize - 1;
-//                         double d2 = newCP.distance(controlNet.get(countU+1).get(countV));
-//                         double d3 = newCP.distance(controlNet.get(countU).get(countV));
-//                         if (d1 < d2)
-//                              return count;
-//                         else
-//                              return count + 1;
-//                    }
-//                    countV++;
-//               }
-//               countU++;
-//          }
-//          return null;
-//     }
-
-
-//     public Point3D surfacePoint(double u, double v) {
-//
-//          int knotIndexU = findKnotSpanU(u);
-//          int knotIndexV = findKnotSpanV(v);
-//          double[] bFU = basisFunctionsU(u, knotIndexU);
-//          double[] bFV = basisFunctionsV(v, knotIndexV);
-//          WPoint3D[][] pW;
-//          if (u == knotsU.get(nU + degreeU)) {
-//               if (v == knotsV.get(nU + degreeU))
-//                    return controlNet.get(nU - 1).get(nV - 1);
-//               else
-//                    pW = wPoints(controlNet, knotIndexU - 1, knotIndexV);
-//          } else if (v == knotsV.get(nU + degreeU))
-//               pW = wPoints(controlNet, knotIndexU, knotIndexV - 1);
-//          else
-//               pW = wPoints(controlNet, knotIndexU, knotIndexV);
-//
-//          WPoint3D rP = new WPoint3D(0, 0, 0, 0);
-//          WPoint3D[] temp = new WPoint3D[degreeU + 1];
-//          for (int i = 0; i < pW.length; i++) {
-//               temp[i] = new WPoint3D(0, 0, 0, 0);
-//               for (int j = 0; j < pW[0].length; j++) {
-//                    temp[i] = temp[i].add(pW[i][j].multiply(bFV[j]));
-//               }
-//          }
-//          for (int i = 0; i < temp.length; i++) {
-//               rP = rP.add(temp[i].multiply(bFU[i]));
-//          }
-//          return rP.convert();
-//     }
