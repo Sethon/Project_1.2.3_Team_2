@@ -138,7 +138,7 @@ public class SpaceModel {
 	public void rotate(String label, String flag, double phi) {
 		for (int i = 0; i < surfaces.size(); i++) {
 			if (surfaces.get(i).getLabel().equals(label)) {
-				EditableSurface sE = (EditableSurface) surfaces.get(i);
+				Surface3D sE = surfaces.get(i);
 				if (flag.contains("X")) {
 					SurfaceUtilities.rotateX(sE, phi);
 				} else if (flag.contains("Y")) {
@@ -154,7 +154,7 @@ public class SpaceModel {
 	public void translate(String label, String flag, double delta) {
 		for (int i = 0; i < surfaces.size(); i++) {
 			if (surfaces.get(i).getLabel().equals(label)) {
-				EditableSurface sE = (EditableSurface) surfaces.get(i);
+				Surface3D sE = surfaces.get(i);
 				if (flag.contains("X")) {
 					SurfaceUtilities.translateX(sE, delta);
 				} else if (flag.contains("Y")) {

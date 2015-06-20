@@ -11,14 +11,14 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
 import application.SpaceModel;
-import surfaces.EditableSurface;
 import surfaces.NURBS;
 import surfaces.Point3D;
+import surfaces.Surface3D;
 
 public class VertexTable extends JFrame implements Runnable {
 
 	private static final long serialVersionUID = 1L;
-	private EditableSurface 	surface;
+	private Surface3D 			surface;
 	private ArrayList<Point3D>	vertices;
 
 	private int 			rows;
@@ -28,7 +28,7 @@ public class VertexTable extends JFrame implements Runnable {
 
 
 
-	public VertexTable(EditableSurface surface, SpaceModel model) {
+	public VertexTable(Surface3D surface, SpaceModel model) {
 		this.surface = surface;
 		this.model = model;
 		
@@ -99,7 +99,7 @@ public class VertexTable extends JFrame implements Runnable {
 						}
 					}
 				}
-				model.updateStructure(surface.getLabel());
+				model.updateStructure((surface).getLabel());
 			}
 		});
 	}

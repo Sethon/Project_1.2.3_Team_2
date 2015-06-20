@@ -501,8 +501,9 @@ public class ListPanel extends JPanel {
 				break;
 			case VERTEX:
 				EditableSurface eS = model.getEditableSurface(currentChoice);
+				Surface3D s = (Surface3D) eS;
 				if (eS != null) {
-					VertexTable vT = new VertexTable(eS, model);
+					VertexTable vT = new VertexTable(s, model);
 					Thread t = new Thread(vT);
 					t.start();
 				} else {
