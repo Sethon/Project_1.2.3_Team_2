@@ -13,8 +13,8 @@ public abstract class ParametricSurface3D extends Surface3D {
 	protected static final Vector3D 	I_VECTOR 		= new Vector3D(1.0, 0.0, 0.0);
 	protected static final Vector3D 	J_VECTOR 		= new Vector3D(0.0, 1.0, 0.0);
 	protected static final Vector3D 	K_VECTOR 		= new Vector3D(0.0, 0.0, 1.0);
-	private static final int INTEGRATION_STEPS_TRAP 	= 100;
-	private static final int INTEGRATION_STEPS_SIMP 	= 100;
+	private static final int INTEGRATION_STEPS_TRAP 	= 1000;
+	private static final int INTEGRATION_STEPS_SIMP 	= 1000;
 	private static boolean				trapezoid		= true;
 	
 	protected double 	t0;

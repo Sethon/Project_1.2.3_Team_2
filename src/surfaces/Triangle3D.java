@@ -1,6 +1,7 @@
 package surfaces;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class Triangle3D extends Surface3D {
@@ -31,14 +32,17 @@ public class Triangle3D extends Surface3D {
 	}
 	
 	public double surfaceArea(){
+		ArrayList<Double> edges = new ArrayList<>();
+		edges.add(p1.dist(p2));
+		edges.add(p1.dist(p3));
+		edges.add(p2.dist(p3));
+		Collections.sort(edges);
+	
+		double u = edges.get(2);
+		double v = edges.get(1);
+		double w = edges.get(0);
 		
-		double u = p1.dist(p2);
-		double v = p1.dist(p3);
-		double w = p2.dist(p3);
-		
-		double s = 0.5*(u+v+w);
-		
-		return Math.sqrt(s*(s-u)*(s-v)*(s-w));
+		return 0.25 * Math.sqrt((u + (v + w))*(w - (u - v))*(w + (u - v))*(u + (v - w)));
 	}
 	
 	@Override
