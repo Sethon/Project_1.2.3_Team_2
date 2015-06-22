@@ -23,7 +23,10 @@ import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.util.awt.TextRenderer;
 
-
+/**
+ * Class for rendering and plotting structures defined using three-dimensional
+ * triangles
+ */
 public class Renderer implements GLEventListener, KeyListener, MouseMotionListener,
 MouseWheelListener {
 	public final static String RENDER_POINTS 			= "Show vertices";
@@ -57,6 +60,11 @@ MouseWheelListener {
 	private float rotateX;    // rotation amounts about axes, controlled by keyboard
 	private float rotateY;
 
+	/**
+	 * Method for displaying renderable structures
+	 * 
+	 * @param arg0 GLAutoDrawable parameter
+	 */
 	@Override
 	public void display(GLAutoDrawable arg0) {
 		GL2 gl = arg0.getGL().getGL2();  // get the OpenGL 2 graphics context
@@ -274,10 +282,20 @@ MouseWheelListener {
 		}
 	}
 
+	/**
+	 * Method for setting a new list of renderable structures
+	 * 
+	 * @param triangles List with renderable triangulated structures
+	 */
 	public void setTriangles(ArrayList<ArrayList<Triangle3D>> triangles) {
 		this.triangles = triangles;
 	}
 
+	/**
+	 * Method for disposing of current view
+	 * 
+	 * @param arg0 GLAutoDrawable parameter
+	 */
 	@Override
 	public void dispose(GLAutoDrawable arg0) {
 

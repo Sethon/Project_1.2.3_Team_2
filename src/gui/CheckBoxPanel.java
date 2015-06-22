@@ -11,11 +11,20 @@ import javax.swing.JRadioButton;
 
 import surfaces.ParametricSurface3D;
 
+/**
+ * Class for encapsulating check box panel controlling the set of plotting modes
+ * and numerical methods. One of the "Controller" family classes
+ */
 public class CheckBoxPanel extends JPanel implements ActionListener {
 	
 	private static final long serialVersionUID 	= 1L;
 	private GLFrame frame;
 	
+	/**
+	 * Constructs a new check box panel
+	 * 
+	 * @param frame Frame containing GLCanvas
+	 */
 	public CheckBoxPanel(GLFrame frame) {
 		this.frame = frame;
 		this.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -61,7 +70,11 @@ public class CheckBoxPanel extends JPanel implements ActionListener {
 		this.add(jRb2);
 	}
 	
-	
+	/**
+	 * Method for handling button action events
+	 * 
+	 * @param e Event to be handled
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() instanceof JCheckBox) {

@@ -19,7 +19,9 @@ import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.util.FPSAnimator;
 
-
+/**
+ * Class for frame containing GLCanvas
+ */
 public class GLFrame extends JFrame {
 	private static final long serialVersionUID 			= 1L;
 	private final static GLProfile PROFILE				= GLProfile.get(GLProfile.GL2);
@@ -30,8 +32,15 @@ public class GLFrame extends JFrame {
 	private FPSAnimator animator;
 	private Renderer	renderer;
 	
-	ArrayList<ArrayList<Triangle3D>> drawables = new ArrayList<>();
+	private ArrayList<ArrayList<Triangle3D>> drawables = new ArrayList<>();
 	
+	/**
+	 * Constructs a new frame
+	 * 
+	 * @param canvasWidth Width for GLCanvas
+	 * @param canvasHeight Height for GLCanvas
+	 * @param title Title for the frame
+	 */
 	public GLFrame(int canvasWidth, int canvasHeight, String title) {
 		super(title);
 		
@@ -79,16 +88,32 @@ public class GLFrame extends JFrame {
 		animator.start();
 	}
 	
+	/**
+	 * Method for pushing triangulated structure to GLCanvas
+	 * 
+	 * @param struct List of triangles
+	 */
 	public void pushStructure(ArrayList<Triangle3D> struct) {
 		drawables.add(struct);
 		renderer.setTriangles(drawables);
 	}
 	
+	/**
+	 * Method for removing triangulated structure from GLCanvas
+	 * 
+	 * @param index Index within the list
+	 */
 	public void removeStructure(int index) {
 		drawables.remove(index);
 		renderer.setTriangles(drawables);
 	}
 	
+	/**
+	 * Method for replacing triangulated structure with the specified one
+	 * 
+	 * @param index Index of the replaceable structure
+	 * @param struct New structure
+	 */
 	public void replaceStructure(int index, ArrayList<Triangle3D> struct) {
 		drawables.remove(index);
 		if (drawables.size() == 0) {
@@ -99,10 +124,22 @@ public class GLFrame extends JFrame {
 		renderer.setTriangles(drawables);
 	}
 	
+	/**
+	 * Method for switching various view modes
+	 * 
+	 * @param element Identifier for the mode
+	 * @param flag Boolean value for the mode 
+	 */
 	public void switchRendering(String element, boolean flag) {
 		renderer.switchRendering(element, flag);
 	}
 	
+	/**
+	 * Method for highlighting various the structure
+	 * 
+	 * @param element Identifier for the mode
+	 * @param flag Boolean value for the mode 
+	 */
 	public void highlight(ArrayList<Point3D> struct) {
 		renderer.highlight(struct);
 	}

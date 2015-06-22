@@ -27,7 +27,9 @@ import surfaces.EditableSurface;
 import surfaces.NURBS;
 import surfaces.Surface3D;
 
-
+/**
+ * Class for panel representing accessible list of surfaces
+ */
 public class ListPanel extends JPanel {
 
 	private static final String INFO 				= "Info";
@@ -51,7 +53,9 @@ public class ListPanel extends JPanel {
 	private SpaceModel			model;
 	private String 				currentChoice;
 
-
+	/**
+	 * Constructs a new panel with empty list
+	 */
 	public ListPanel() {
 		super();
 
@@ -121,6 +125,11 @@ public class ListPanel extends JPanel {
 		popUp.add(item6);
 	}
 
+	/**
+	 * Method for adding specified surface to the list
+	 * 
+	 * @param s Surface
+	 */
 	public void addSurface(Surface3D s) {
 		String[] tmp = new String[surfaceList.getModel().getSize() + 1];
 		for (int i = 0; i < surfaceList.getModel().getSize(); i++) {
@@ -135,6 +144,11 @@ public class ListPanel extends JPanel {
 		}
 	}
 
+	/**
+	 * Method for attaching a spatial model to the list
+	 * 
+	 * @param model SpaceModel object to be updated
+	 */
 	public void attachModel(SpaceModel model) {
 		this.model = model;
 	}
