@@ -8,6 +8,10 @@ import java.util.ArrayList;
 
 import surfaces.*;
 
+/**
+ * Class for representing the model of the 3D space containing various
+ * surfaces
+ */
 public class SpaceModel {
 
 	private static final int STEP_SURF 			= 100;
@@ -20,18 +24,34 @@ public class SpaceModel {
 	private ListPanel list;
 	private Surface3D highlight;
 
+	/**
+	 * Constructs a new spatial model
+	 * 
+	 * @param frame Frame containing GLCanvas
+	 * @param panel Panel controlling the list of surfaces
+	 */
 	public SpaceModel(GLFrame frame, ListPanel panel) {
 		this.frame = frame;
 		surfaces = new ArrayList<>();
 		list = panel;
 	}
-
+	
+	/**
+	 * Adds a new surface to the model
+	 * 
+	 * @param s Surface
+	 */
 	public void addSurface(Surface3D s) {
 		surfaces.add(s);
 		list.addSurface(surfaces.get(surfaces.size() - 1));
 		frame.pushStructure(s.triangulate());
 	}
 
+	/**
+	 * Removes surface specified by a label
+	 * 
+	 * @param label Surface label
+	 */
 	public void removeSurface(String label) {
 		int index = 0;
 		for (int i = 0; i < surfaces.size(); i++) {
@@ -47,6 +67,11 @@ public class SpaceModel {
 		frame.removeStructure(index);
 	}
 
+	/**
+	 * Adds new surface specified the type of which is specified by a label
+	 * 
+	 * @param label Surface type label
+	 */
 	public void addNewSurface(String label) {
 		boolean held = false;
 		switch (label) {
@@ -56,25 +81,6 @@ public class SpaceModel {
 			break;
 		case UIMenu.NURBS:
 			held = true;
-//			WPoint3D[][] p = new WPoint3D[4][4];
-//			p[0][0] = new WPoint3D(0, 0, 1, 1);
-//			p[0][1] = new WPoint3D(0, 0, 1, 1 / 3.0);
-//			p[0][2] = new WPoint3D(0, 0, 1, 1 / 3.0);
-//			p[0][3] = new WPoint3D(0, 0, 1, 1);
-//			p[1][0] = new WPoint3D(2, 0, 1, 1 / 3.0);
-//			p[1][1] = new WPoint3D(2, 4, 1, 1 / 9.0);
-//			p[1][2] = new WPoint3D(-2, 4, 1, 1 / 9.0);
-//			p[1][3] = new WPoint3D(-2, 0, 1, 1 / 3.0);
-//			p[2][0] = new WPoint3D(2, 0, -1, 1 / 3.0);
-//			p[2][1] = new WPoint3D(2, 4, -1, 1 / 9.0);
-//			p[2][2] = new WPoint3D(-2, 4, -1, 1 / 9.0);
-//			p[2][3] = new WPoint3D(-2, 0, -1, 1 / 3.0);
-//			p[3][0] = new WPoint3D(0, 0, -1, 1);
-//			p[3][1] = new WPoint3D(0, 0, -1, 1 / 3.0);
-//			p[3][2] = new WPoint3D(0, 0, -1, 1 / 3.0);
-//			p[3][3] = new WPoint3D(0, 0, -1, 1);
-//			double[] knots = {0, 0, 0, 0, 1, 1, 1, 1};
-//			surfaces.add(new NURBS(3, 3, p, knots, knots));
                surfaces.add(new NURBS(3,3));
 			break;
 		case UIMenu.SPIRAL:
@@ -93,6 +99,11 @@ public class SpaceModel {
 		}
 	}
 
+	/**
+	 * Getter for the list of FV Polygon Meshes currently contained in the model
+	 * 
+	 * @return Returns the list of meshes
+	 */
 	public ArrayList<FVPolygonMesh> getMeshList() {
 		ArrayList<FVPolygonMesh> tmp = new ArrayList<>();
 		for (Surface3D s : surfaces) {
@@ -103,6 +114,11 @@ public class SpaceModel {
 		return tmp;
 	}
 	
+	/**
+	 * Getter for the list of NURBS surfaces currently contained in the model
+	 * 
+	 * @return Returns the list of NURBS
+	 */
 	public ArrayList<NURBS> getNURBSList() {
 		ArrayList<NURBS> tmp = new ArrayList<>();
 		for (Surface3D s : surfaces) {
@@ -113,6 +129,13 @@ public class SpaceModel {
 		return tmp;
 	}
 
+	/**
+	 * Method for accessing the information on a surface specified by the label
+	 * 
+	 * @param label Surface label
+	 * 
+	 * @return Returns a string with information on the surface
+	 */
 	public String getSurfaceInfo(String label) {
 		String info = "";
 		for (Surface3D s : surfaces) {
@@ -124,6 +147,13 @@ public class SpaceModel {
 		return info;
 	}
 
+	/**
+	 * Method for identifying if a surface specified by the label is editable 
+	 * 
+	 * @param label Surface label
+	 * 
+	 * @return Returns true if surface is editable and false otherwise
+	 */
 	public boolean isEditable(String label) {
 		boolean ans = false;
 		for (Surface3D s : surfaces) {
@@ -135,6 +165,13 @@ public class SpaceModel {
 		return ans;
 	}
 
+	/**
+	 * Method for rotating surface specified by the label
+	 * 
+	 * @param label Surface label
+	 * @param flag Rotation axis
+	 * @param phi Rotation angle
+	 */
 	public void rotate(String label, String flag, double phi) {
 		for (int i = 0; i < surfaces.size(); i++) {
 			if (surfaces.get(i).getLabel().equals(label)) {
@@ -151,6 +188,13 @@ public class SpaceModel {
 		}
 	}
 
+	/**
+	 * Method for translating surface specified by the label
+	 * 
+	 * @param label Surface label
+	 * @param flag Translation axis
+	 * @param delta Translation distance
+	 */
 	public void translate(String label, String flag, double delta) {
 		for (int i = 0; i < surfaces.size(); i++) {
 			if (surfaces.get(i).getLabel().equals(label)) {
@@ -167,6 +211,14 @@ public class SpaceModel {
 		}
 	}
 	
+	/**
+	 * Method for applying Catmull-Clark algorithm to mesh specified by the
+	 * label
+	 * 
+	 * @param label Mesh label
+	 * 
+	 * @return Returns the label of a newly formed mesh
+	 */
 	public String clarkinate(String label) {
 		for (int i = 0; i < surfaces.size(); i++) {
 			if (surfaces.get(i).getLabel().equals(label)) {
@@ -181,6 +233,15 @@ public class SpaceModel {
 		return null;
 	}
 
+	/**
+	 * Method for adding a new vertex to editable surface specified by the label
+	 * 
+	 * @param x X-coordinate of a vertex
+	 * @param y Y-coordinate of a vertex
+	 * @param z Z-coordinate of a vertex
+	 * @param label Surface label
+	 * @param instruct Specifications for the insertion
+	 */
 	public void addVertex(double x, double y, double z, String label, String instruct) {
 		for (int i = 0; i < surfaces.size(); i++) {
 			if (surfaces.get(i).getLabel().equals(label)) {
@@ -191,6 +252,22 @@ public class SpaceModel {
 		}
 	}
 
+	/**
+	 * Method for adding three new vertex to editable surface specified by the label
+	 * 
+	 * @param x1 X-coordinate of the first vertex
+	 * @param y1 Y-coordinate of the first vertex
+	 * @param z1 Z-coordinate of the first vertex
+	 * @param x2 X-coordinate of the second vertex
+	 * @param y2 Y-coordinate of the second vertex
+	 * @param z2 Z-coordinate of the second vertex
+	 * @param x3 X-coordinate of the third vertex
+	 * @param y3 Y-coordinate of the third vertex
+	 * @param z3 Z-coordinate of the third vertex
+	 * @param label Surface label
+	 * @param instruct Specifications for the insertion
+	 * @param w Weight
+	 */
 	public void add3Vertices(double x1, double y1, double z1, double x2, double y2, 
 			double z2, double x3, double y3, double z3, 
 			String label, String instruct, double w) {
@@ -204,6 +281,19 @@ public class SpaceModel {
 		}
 	}
 
+	/**
+	 * Method for adding three new vertex to editable surface specified by the label
+	 * 
+	 * @param x1 X-coordinate of the first vertex
+	 * @param y1 Y-coordinate of the first vertex
+	 * @param z1 Z-coordinate of the first vertex
+	 * @param x2 X-coordinate of the second vertex
+	 * @param y2 Y-coordinate of the second vertex
+	 * @param z2 Z-coordinate of the second vertex
+	 * @param label Surface label
+	 * @param instruct Specifications for the insertion
+	 * @param w Weight
+	 */
 	public void add2Vertices(double x1, double y1, double z1, double x2, double y2, 
 			double z2, String label, String instruct, double w) {
 		for (int i = 0; i < surfaces.size(); i++) {
@@ -215,6 +305,11 @@ public class SpaceModel {
 		}
 	}
 
+	/**
+	 * Method for highlighting surface specified by the label 
+	 * 
+	 * @param label Surface label
+	 */
 	public void higlightStructure(String label) {
 		if (label != null) {
 			for (int i = 0; i < surfaces.size(); i++) {
@@ -228,6 +323,13 @@ public class SpaceModel {
 		}
 	}
 
+	/**
+	 * Method for identifying if a surface specified by the label is a NURBS 
+	 * 
+	 * @param label Surface label
+	 * 
+	 * @return Returns true if surface is a NURBS and false otherwise
+	 */
 	public boolean isNURBS(String label) {
 		for (int i = 0; i < surfaces.size(); i++) {
 			if (surfaces.get(i).getLabel().equals(label)) {
@@ -241,6 +343,13 @@ public class SpaceModel {
 		return false;
 	}
 	
+	/**
+	 * Method for identifying if a surface specified by the label is an FV mesh 
+	 * 
+	 * @param label Surface label
+	 * 
+	 * @return Returns true if surface is an FV Mesh and false otherwise
+	 */
 	public boolean isFVPolyMesh(String label) {
 		for (int i = 0; i < surfaces.size(); i++) {
 			if (surfaces.get(i).getLabel().equals(label)) {
@@ -254,6 +363,13 @@ public class SpaceModel {
 		return false;
 	}
 	
+	/**
+	 * Method for retrieving an editable surface specified by the label 
+	 * 
+	 * @param label Surface label
+	 * 
+	 * @return Returns specified editable surface (potentially null)
+	 */
 	public EditableSurface getEditableSurface(String label) {
 		for (int i = 0; i < surfaces.size(); i++) {
 			if (surfaces.get(i).getLabel().equals(label)) {
@@ -267,6 +383,11 @@ public class SpaceModel {
 		return null;
 	}
 	
+	/**
+	 * Method for updating surface specified by the label 
+	 * 
+	 * @param label Surface label
+	 */
 	public void updateStructure(String label) {
 		for (int i = 0; i < surfaces.size(); i++) {
 			if (surfaces.get(i).getLabel().equals(label)) {
