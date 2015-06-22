@@ -4,6 +4,9 @@ import org.apache.commons.math3.linear.*;
 
 import java.util.ArrayList;
 
+/**
+ * This class represents NURBS surfaces in 3D space.
+ */
 public class NURBS extends Surface3D implements EditableSurface {
 
      private ArrayList<Double> knotsU;
@@ -16,6 +19,11 @@ public class NURBS extends Surface3D implements EditableSurface {
      public static final String U = "U";
      public static final String V = "V";
 
+     /**
+      * Constructs an empty NURBS surface.
+      * @param degreeU Degree of the surface along the U-direction.
+      * @param degreeV Degree of the surface along the V-direction.
+      */
      public NURBS(int degreeU, int degreeV) {
           instCnt++;
           assignLabel();
@@ -28,6 +36,15 @@ public class NURBS extends Surface3D implements EditableSurface {
           controlNet = new ArrayList<>();
      }
 
+     /**
+      * Constructs a NURBS surface from supplied NURBS data.
+      *
+      * @param degreeU Degree of the surface along the U-direction.
+      * @param degreeV Degree of the surface along the V-direction.
+      * @param cP 2D Matrix of control points. "Control net"
+      * @param knotsU Knot vector for the U-direction.
+      * @param knotsV Knot vector for the V-direction.
+      */
      public NURBS(int degreeU, int degreeV, WPoint3D[][] cP, double[] knotsU, double[] knotsV) {
           instCnt++;
           assignLabel();
@@ -51,6 +68,14 @@ public class NURBS extends Surface3D implements EditableSurface {
                this.knotsV.add(i);
      }
 
+     /**
+      *
+      * @param degreeU Degree of the surface along the U-direction.
+      * @param degreeV Degree of the surface along the V-direction.
+      * @param cP 2D Matrix of control points. "Control net"
+      * @param knotsU Knot vector for the U-direction.
+      * @param knotsV Knot vector for the V-direction.
+      */
      public NURBS(int degreeU, int degreeV, ArrayList<ArrayList<WPoint3D>> cP, ArrayList<Double> knotsU, ArrayList<Double> knotsV) {
           instCnt++;
           assignLabel();
@@ -63,6 +88,12 @@ public class NURBS extends Surface3D implements EditableSurface {
           nV = cP.get(0).size();
      }
 
+     /**
+      *
+      * @param degreeU Degree of the surface along the U-direction.
+      * @param degreeV Degree of the surface along the V-direction.
+      * @param points 2D Arraylist of control points. "Control net"
+      */
      public NURBS(int degreeU, int degreeV, ArrayList<ArrayList<Point3D>> points) {
           instCnt++;
           assignLabel();
@@ -85,6 +116,10 @@ public class NURBS extends Surface3D implements EditableSurface {
           return controlNet;
      }
 
+     /**
+      * Returns the control net (Point3D).
+      * @return The control net.
+      */
      public ArrayList<ArrayList<Point3D>> get() {
           ArrayList<ArrayList<Point3D>> cN = new ArrayList<>();
           for (ArrayList<WPoint3D> i : controlNet) {
@@ -95,6 +130,11 @@ public class NURBS extends Surface3D implements EditableSurface {
           return cN;
      }
 
+     /**
+      * Returns the closest point in the control net to the supplied point.
+      * @param p Point whose neighbor is to be found.
+      * @return Closest point to supplied point.
+      */
      public Point3D getClosest(Point3D p) {
 
           Point3D close = null;
@@ -110,6 +150,181 @@ public class NURBS extends Surface3D implements EditableSurface {
                }
           }
           return close;
+     }
+
+     /**
+      * Returns the points of the control net in a single ArrayList of Point3Ds.
+      * @return Arraylist of control points.
+      */
+     @Override
+     public ArrayList<Point3D> vertices() {
+          ArrayList<Point3D> v = new ArrayList<>();
+          for (ArrayList<WPoint3D> i : controlNet)
+               for (Point3D j : i)
+                    v.add(j);
+          return v;
+     }
+
+     /**
+      * Returns the control net.
+      * @return Control net.
+      */
+     public ArrayList<ArrayList<WPoint3D>> getControlNet() {
+          return controlNet;
+     }
+
+     /**
+      * Returns the surface area of the nurbs curve.
+      * @return Area.
+      */
+     @Override
+     public double surfaceArea() {
+          return 0;
+     }
+
+     /**
+      * Adds the supplied point to the control net in the given direction.
+      * @param p Point to be added (Weight will be 1).
+      * @param instruct Direction in which the point will be added.
+      */
+     @Override
+     public void addVertex(Point3D p, String instruct) {
+          if (controlNet.size() == 0) {
+               ArrayList<WPoint3D> curve = new ArrayList<>();
+               curve.add(new WPoint3D(p, 1.0));
+               controlNet.add(curve);
+          } else if (instruct.equals("U")) {
+               ArrayList<WPoint3D> newU = new ArrayList<>();
+               for (int i = 0; i < nV; i++) {
+                    newU.add(new WPoint3D(p, 1.0));
+               }
+               controlNet.add(newU);
+               addKnot(1, 0.5);
+               nU++;
+          } else {
+               for (ArrayList<WPoint3D> i : controlNet) {
+                    i.add(new WPoint3D(p, 1.0));
+               }
+               addKnot(2, 0.5);
+               nV++;
+          }
+     }
+
+     /**
+      * Addes a new curve to the control net in the given direction, specified between two supplied points.
+      * @param p1 First point of the new curve.
+      * @param p2 Second point of the new curve.
+      * @param instruct Direction in which the curve is to be added.
+      * @param w Weight of the control points of the new curve.
+      */
+     @Override
+     public void add2Vertices(Point3D p1, Point3D p2, String instruct, double w) {
+
+          if (controlNet.size() == 0) {
+               initiateNurbs(new WPoint3D(p1, w), new WPoint3D(p2, w));
+          } else if (instruct.equals("U")) {
+               ArrayList<WPoint3D> newU = new ArrayList<>();
+               newU.add(new WPoint3D(p1, w));
+               double spacing = 1 / (double) nU;
+               for (int i = 0; i < nU - 1; i++, spacing += spacing) {
+                    newU.add(lerp(new WPoint3D(p1, w), new WPoint3D(p2, w), spacing));
+               }
+               newU.add(new WPoint3D(p2, w));
+               controlNet.add(newU);
+               addKnot(1, 0.5);
+               nU++;
+          } else {
+               double spacing = 1 / (double) nV;
+               double startSpacing = 0;
+               for (ArrayList<WPoint3D> i : controlNet) {
+                    i.add(lerp(new WPoint3D(p1, w), new WPoint3D(p2, w), startSpacing));
+                    startSpacing += spacing;
+               }
+               addKnot(2, 0.5);
+               nV++;
+          }
+     }
+
+     /**
+      * Method stub (not used).
+      * @param p1
+      * @param p2
+      * @param p3
+      * @param instruct
+      * @param w
+      */
+     @Override
+     public void add3Vertices(Point3D p1, Point3D p2, Point3D p3, String instruct, double w) {
+
+     }
+
+     /**
+      * Returns the degree along the U-direction.
+      * @return Degree of the U-direction.
+      */
+     public int getDegreeU() {
+          return degreeU;
+     }
+
+     /**
+      * Returns the degree along the V-direction.
+      * @return Degree of the V-direction.
+      */
+     public int getDegreeV() {
+          return degreeV;
+     }
+
+     /**
+      * Returns the number of control points along the U-direction.
+      * @return Number of control points along the U-direction.
+      */
+     public int getnU() {
+          return nU;
+     }
+
+     /**
+      * Returns the number of control points along the V-direction.
+      * @return Number of control points along the V-direction.
+      */
+     public int getnV() {
+          return nV;
+     }
+
+     /**
+      * Returns the knot vector along the U-direction.
+      * @return Knot vector (U).
+      */
+     public ArrayList<Double> getKnotsU() {
+          return knotsU;
+     }
+
+     /**
+      * Returns the knot vector along the V-direction.
+      * @return Knot vector (V).
+      */
+     public ArrayList<Double> getKnotsV() {
+          return knotsV;
+     }
+
+     /**
+      * Triangulates the surface and returns an arraylist of triangles.
+      * @return Arraylist of triangles.
+      */
+     @Override
+     public ArrayList<Triangle3D> triangulate() {
+
+          if (controlNet.size() == 0) return new ArrayList<>();
+          ArrayList<Triangle3D> triangles = new ArrayList<>();
+          Point3D[][] v = getVertices(50);
+          int size = v.length;
+
+          for (int i = 0; i < size - 1; i++) {
+               for (int j = 0; j < size - 1; j++) {
+                    triangles.add(new Triangle3D(v[i][j], v[i + 1][j], v[i][j + 1]));
+                    triangles.add(new Triangle3D(v[i + 1][j], v[i][j + 1], v[i + 1][j + 1]));
+               }
+          }
+          return triangles;
      }
 
      private int findKnotSpanU(double u) {
@@ -190,7 +405,7 @@ public class NURBS extends Surface3D implements EditableSurface {
           return bF;
      }
      
-     public Point3D surfacePoint(double u, double v) {
+     private Point3D surfacePoint(double u, double v) {
           
           int uSpan = findKnotSpanU(u);
           int vSpan = findKnotSpanV(v);
@@ -216,7 +431,7 @@ public class NURBS extends Surface3D implements EditableSurface {
           return rP.convert();
      }
 
-     public Point3D[][] getVertices(int steps) {
+     private Point3D[][] getVertices(int steps) {
           double u = 0;
           double v = 0;
           double dU = knotsU.get(nU + 1) / steps;
@@ -237,25 +452,6 @@ public class NURBS extends Surface3D implements EditableSurface {
           return vertices;
      }
 
-     @Override
-     public ArrayList<Triangle3D> triangulate() {
-
-          if (controlNet.size() == 0) return new ArrayList<>();
-          ArrayList<Triangle3D> triangles = new ArrayList<>();
-          Point3D[][] v = getVertices(50);
-          int size = v.length;
-
-          for (int i = 0; i < size - 1; i++) {
-               for (int j = 0; j < size - 1; j++) {
-                    //System.out.print(v[i][j].toString() + " ");
-                    triangles.add(new Triangle3D(v[i][j], v[i + 1][j], v[i][j + 1]));
-                    triangles.add(new Triangle3D(v[i + 1][j], v[i][j + 1], v[i + 1][j + 1]));
-               }
-               //System.out.println();
-          }
-          return triangles;
-     }
-
      private WPoint3D[][] wPoints(ArrayList<ArrayList<WPoint3D>> controlNet, int uSpan, int vSpan) {
 
           WPoint3D[][] pW = new WPoint3D[degreeU + 1][degreeV + 1];
@@ -272,37 +468,19 @@ public class NURBS extends Surface3D implements EditableSurface {
           return pW;
      }
 
-     @Override
-     public ArrayList<Point3D> vertices() {
-          ArrayList<Point3D> v = new ArrayList<>();
-          for (ArrayList<WPoint3D> i : controlNet)
-               for (Point3D j : i)
-                    v.add(j);
-          return v;
-     }
-
-     public ArrayList<ArrayList<WPoint3D>> getControlNet() {
-          return controlNet;
-     }
-
-     @Override
-     public double surfaceArea() {
-          return 0;
-     }
-
-     public void scaleKnotsU(double factor) {
+     private void scaleKnotsU(double factor) {
           for (int i = degreeU + 1; i < nU; i++) {
                knotsU.set(i, knotsU.get(i) * factor);
           }
      }
 
-     public void scaleKnotsV(double factor) {
+     private void scaleKnotsV(double factor) {
           for (int i = degreeV + 1; i < nV; i++) {
                knotsV.set(i, knotsV.get(i) * factor);
           }
      }
 
-     public void makeUniform() {
+     private void makeUniform() {
           double startU = 1 / (double) (nU - (degreeU + 1));
           for (int i = degreeU + 1; i < nU; i++) {
                knotsU.set(i, startU);
@@ -328,57 +506,6 @@ public class NURBS extends Surface3D implements EditableSurface {
                double factor = (d - 1) / (double) d;
                scaleKnotsV(factor);
                knotsV.add(nV, 1 * factor);
-          }
-     }
-
-     @Override
-     public void addVertex(Point3D p, String instruct) {
-          if (controlNet.size() == 0) {
-               ArrayList<WPoint3D> curve = new ArrayList<>();
-               curve.add(new WPoint3D(p, 1.0));
-               controlNet.add(curve);
-          } else if (instruct.equals("U")) {
-               ArrayList<WPoint3D> newU = new ArrayList<>();
-               for (int i = 0; i < nV; i++) {
-                    newU.add(new WPoint3D(p, 1.0));
-               }
-               controlNet.add(newU);
-               addKnot(1, 0.5);
-               nU++;
-          } else {
-               for (ArrayList<WPoint3D> i : controlNet) {
-                    i.add(new WPoint3D(p, 1.0));
-               }
-               addKnot(2, 0.5);
-               nV++;
-          }
-     }
-
-     @Override
-     public void add2Vertices(Point3D p1, Point3D p2, String instruct, double w) {
-
-          if (controlNet.size() == 0) {
-               initiateNurbs(new WPoint3D(p1, w), new WPoint3D(p2, w));
-          } else if (instruct.equals("U")) {
-               ArrayList<WPoint3D> newU = new ArrayList<>();
-               newU.add(new WPoint3D(p1, w));
-               double spacing = 1 / (double) nU;
-               for (int i = 0; i < nU - 1; i++, spacing += spacing) {
-                    newU.add(lerp(new WPoint3D(p1, w), new WPoint3D(p2, w), spacing));
-               }
-               newU.add(new WPoint3D(p2, w));
-               controlNet.add(newU);
-               addKnot(1, 0.5);
-               nU++;
-          } else {
-               double spacing = 1 / (double) nV;
-               double startSpacing = 0;
-               for (ArrayList<WPoint3D> i : controlNet) {
-                    i.add(lerp(new WPoint3D(p1, w), new WPoint3D(p2, w), startSpacing));
-                    startSpacing += spacing;
-               }
-               addKnot(2, 0.5);
-               nV++;
           }
      }
 
@@ -586,19 +713,13 @@ public class NURBS extends Surface3D implements EditableSurface {
 
      }
 
-     public ArrayList<Point3D> curveInterpolation(ArrayList<Point3D> points, double[] params, ArrayList<Double> knots, int degree) {
+     private ArrayList<Point3D> curveInterpolation(ArrayList<Point3D> points, double[] params, ArrayList<Double> knots, int degree) {
           int n = params.length;
 
           double[][] N = new double[n][n];
           for (int i = 0; i < n; i++) {
                int kI = findKnotSpan(params[i], knots, degree);
                N[i] = basisFunctions(knots, params[i], kI, degree, n);
-          }
-          for (int i = 0; i < N.length; i++) {
-               for (int j = 0; j < N[0].length; j++) {
-                    System.out.print(N[i][j] + " ");
-               }
-               System.out.println();
           }
 
           RealMatrix NN = MatrixUtils.createRealMatrix(N);
@@ -625,36 +746,7 @@ public class NURBS extends Surface3D implements EditableSurface {
           return newPoints;
      }
 
-     @Override
-     public void add3Vertices(Point3D p1, Point3D p2, Point3D p3, String instruct, double w) {
-
-     }
-
-     public int getDegreeU() {
-          return degreeU;
-     }
-
-     public int getDegreeV() {
-          return degreeV;
-     }
-
-     public int getnU() {
-          return nU;
-     }
-
-     public int getnV() {
-          return nV;
-     }
-
-     public ArrayList<Double> getKnotsU() {
-          return knotsU;
-     }
-
-     public ArrayList<Double> getKnotsV() {
-          return knotsV;
-     }
-
-     public void printStuff() {
+     private void printStuff() {
           System.out.println("DegreeU: " + degreeU + " DegreeV: " + degreeV);
           System.out.println("nU: " + nU + " nV: " + nV);
           System.out.println("KnotsU:");
@@ -665,6 +757,10 @@ public class NURBS extends Surface3D implements EditableSurface {
                System.out.println(i);
      }
 
+     /**
+      * Returns the string representation of this NURBS surface.
+      * @return String of the NURBS.
+      */
      public String toString() {
           StringBuilder sb = new StringBuilder();
           sb.append("NURBS Surface" + System.lineSeparator());
