@@ -82,11 +82,6 @@ public class FVPolygonMesh extends PolygonMesh {
 		}
 	}
 	
-	/**
-	 * Finds and returns the two closest vertices to the given point p.
-	 * @param p Point which needs the two closest vertices.
-	 * @return array containing the indices of the found vertices.
-	 */
 	private int[] find2ClosestPs(Point3D p) {
 		Point3D v1 = vertices.get(0);
 		Point3D v2 = vertices.get(1);

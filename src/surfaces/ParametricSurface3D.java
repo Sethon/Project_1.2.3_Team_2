@@ -159,10 +159,6 @@ public abstract class ParametricSurface3D extends Surface3D {
 		}	
 	}
 	
-	/**
-	 * Uses the trapezoid method to calculate the surface area of the parametric surface.
-	 * @return the surface area.
-	 */
 	private double surfaceAreaTrap() {
 		double[] It = new double[INTEGRATION_STEPS_TRAP + 1];
 		double stepsize = (t1-t0)/INTEGRATION_STEPS_TRAP;
@@ -183,10 +179,6 @@ public abstract class ParametricSurface3D extends Surface3D {
 		return Ifin;
 	}
 	
-	/**
-	 * Uses the Simpson method to calculate the surface area of the parametric surface.
-	 * @return the surface area.
-	 */
 	private double surfaceAreaSimp() {
 		double[] It = new double[INTEGRATION_STEPS_SIMP + 1];
 		double stepsize = (t1 - t0)/INTEGRATION_STEPS_SIMP;
@@ -210,14 +202,6 @@ public abstract class ParametricSurface3D extends Surface3D {
 		return Ifin * (((s1 - s0)/INTEGRATION_STEPS_SIMP)/3);
 	}
 	
-	/**
-	 * The trapezoid method for calculating integrals.
-	 * @param step the stepsize for the checks.
-	 * @param x Certain x value for the integral.
-	 * @param t0 Lower bound for the integral.
-	 * @param tn Upper bound for the integral.
-	 * @return the computed integral value.
-	 */
 	private double trapezoid(double step, double x, double t0, double tn) {
 		double I = 0;
 		for(double i = t0; i <= tn + 10E-14; i+=step) {
@@ -240,14 +224,6 @@ public abstract class ParametricSurface3D extends Surface3D {
 		return step * I;
 	}
 
-	/**
-	 * The Simpson method for calculating integrals.
-	 * @param step the stepsize for the checks.
-	 * @param x Certain x value for the integral.
-	 * @param t0 Lower bound for the integral.
-	 * @param tn Upper bound for the integral.
-	 * @return the computed integral value.
-	 */
 	private double simpson(double step, double x, double t0, double tn) {
 		double Is = 0;
 		for(int i = 0; i < INTEGRATION_STEPS_SIMP + 1; i++) {

@@ -5,22 +5,22 @@ package surfaces;
  */
 public class ClarkCell {
 
-	public Point3D facePoint;
-	public Point3D v1;
-	public Point3D v2;
-	public Point3D v3;
+	private Point3D facePoint;
+	private Point3D v1;
+	private Point3D v2;
+	private Point3D v3;
 	
-	public int v1Val;
-	public int v2Val;
-	public int v3Val;
+	private int v1Val;
+	private int v2Val;
+	private int v3Val;
 	
-	public Point3D edgePoint12;
-	public Point3D edgePoint23;
-	public Point3D edgePoint13;
+	private Point3D edgePoint12;
+	private Point3D edgePoint23;
+	private Point3D edgePoint13;
 	
-	public boolean outEdge12 = false;
-	public boolean outEdge23 = false;
-	public boolean outEdge13 = false;
+	private boolean outEdge12 = false;
+	private boolean outEdge23 = false;
+	private boolean outEdge13 = false;
 	
 	/**
 	 * Instantiator which creates a new ClarkCell with the input information
