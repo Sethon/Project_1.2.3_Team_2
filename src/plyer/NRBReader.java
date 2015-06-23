@@ -6,14 +6,26 @@ import java.util.ArrayList;
 
 import surfaces.*;
 
+/**
+ * Read NRB files, which constructs NURBS models.
+ */
 public class NRBReader {
 
      private double magnFactor;
 
+     /**
+      * Creates a new NRBReader object with a certain magnifying value.
+      * @param magnFactor The magnifying value which is multiplied with every element of the read FVPolygonMesh.
+      */
      public NRBReader(double magnFactor) {
           this.magnFactor = magnFactor;
      }
 
+ 	/**
+ 	 * Reads the inputted file and creates a NURBS surface with the elements.
+ 	 * @param filename The File to be read
+ 	 * @return the constructed NURBS.
+ 	 */
      public NURBS getNURBS(String filename) {
           int degreeU = 0;
           int degreeV = 0;

@@ -7,7 +7,15 @@ import java.util.ArrayList;
 
 import surfaces.*;
 
+/**
+ * Creates new NRB files using the inputted NURBS model.
+ */
 public class NRBWriter {
+	/**
+	 * Creates the NRB file.
+	 * @param filename The name the new file should get.
+	 * @param nurbs The NURBS which needs to be in the NRB file.
+	 */
      public void writeNURBS(String filename, NURBS nurbs) {
           try {
                int degreeU = nurbs.getDegreeU();
