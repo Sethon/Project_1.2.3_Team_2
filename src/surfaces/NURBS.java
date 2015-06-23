@@ -533,29 +533,32 @@ public class NURBS extends Surface3D implements EditableSurface {
 
           WPoint3D p2 = new WPoint3D(p1.getX(), p1.getY(), p3.getZ(), p1.getWeight());
           WPoint3D p4 = new WPoint3D(p3.getX(), p3.getY(), p1.getZ(), p2.getWeight());
-          double spacing = 1 / (double) nU;
+          double spacing = 1 / (double) (nU-1);
           double startSpacing = 0;
           for (ArrayList<WPoint3D> i : controlNet) {
                i.add(lerp(p1, p2, startSpacing));
                startSpacing += spacing;
+               System.out.println(i.toString());
           }
+
           WPoint3D[] left = new WPoint3D[nV];
           WPoint3D[] right = new WPoint3D[nV];
-          spacing = 1 / (double) nV;
-          startSpacing = 0;
+          spacing = 1 / (double) (nV-1);
+          startSpacing = spacing;
           for (int i = 0; i < nV; i++, startSpacing += spacing) {
                left[i] = lerp(p2, p3, startSpacing);
           }
-          startSpacing = 0;
+          startSpacing = spacing;
           for (int i = 0; i < nV; i++, startSpacing += spacing) {
                right[i] = lerp(p1, p4, startSpacing);
           }
-          spacing = 1 / (double) nU;
-          for (int i = 0; i < nV - 1; i++) {
+          spacing = 1 / (double) (nU-1);
+          for (int i = 0; i < nV; i++) {
                startSpacing = 0;
                for (int j = 0; j < nU; j++, startSpacing += spacing) {
                     controlNet.get(j).add(lerp(right[i], left[i], startSpacing));
                }
+               System.out.println(controlNet.get(i).toString());
           }
      }
 
