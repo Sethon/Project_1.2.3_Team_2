@@ -135,10 +135,9 @@ public class GLFrame extends JFrame {
 	}
 	
 	/**
-	 * Method for highlighting various the structure
+	 * Method for highlighting the structure
 	 * 
-	 * @param element Identifier for the mode
-	 * @param flag Boolean value for the mode 
+	 * @param struct Structure to be highlighted
 	 */
 	public void highlight(ArrayList<Point3D> struct) {
 		renderer.highlight(struct);
