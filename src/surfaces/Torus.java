@@ -35,6 +35,7 @@ public class Torus extends ParametricSurface3D {
 	 * Computes the x-coordinates of the spiral.
 	 * @param t First parameter for the spiral.
 	 * @param s Second parameter for the spiral.
+	 * @return the x-coordinates.
 	 */
 	@Override
 	public double computeX(double t, double s) {
@@ -45,6 +46,7 @@ public class Torus extends ParametricSurface3D {
 	 * Computes the y-coordinates of the spiral.
 	 * @param t First parameter for the spiral.
 	 * @param s Second parameter for the spiral.
+	 * @return the y-coordinates.
 	 */
 	@Override
 	public double computeY(double t, double s) {
@@ -55,6 +57,7 @@ public class Torus extends ParametricSurface3D {
 	 * Computes the z-coordinates of the spiral.
 	 * @param t First parameter for the spiral.
 	 * @param s Second parameter for the spiral.
+	 * @return the z-coordinates.
 	 */
 	@Override
 	public double computeZ(double t, double s) {
@@ -75,6 +78,7 @@ public class Torus extends ParametricSurface3D {
 	 * Computes the x-coordinates of the spiral with respect to t.
 	 * @param t First parameter for the spiral.
 	 * @param s Second parameter for the spiral.
+	 * @return the x-coordinates with respect to t.
 	 */
 	@Override
 	public double computeXt(double t, double s) {
@@ -85,6 +89,7 @@ public class Torus extends ParametricSurface3D {
 	 * Computes the x-coordinates of the spiral with respect to s.
 	 * @param t First parameter for the spiral.
 	 * @param s Second parameter for the spiral.
+	 * @return the x-coordinates with respect to s.
 	 */
 	@Override
 	public double computeXs(double t, double s) {
@@ -95,6 +100,7 @@ public class Torus extends ParametricSurface3D {
 	 * Computes the y-coordinates of the spiral with respect to t.
 	 * @param t First parameter for the spiral.
 	 * @param s Second parameter for the spiral.
+	 * @return the y-coordinates with respect to t.
 	 */
 	@Override
 	public double computeYt(double t, double s) {
@@ -105,6 +111,7 @@ public class Torus extends ParametricSurface3D {
 	 * Computes the y-coordinates of the spiral with respect to s.
 	 * @param t First parameter for the spiral.
 	 * @param s Second parameter for the spiral.
+	 * @return the y-coordinates with respect to s.
 	 */
 	@Override
 	public double computeYs(double t, double s) {
@@ -115,6 +122,7 @@ public class Torus extends ParametricSurface3D {
 	 * Computes the z-coordinates of the spiral with respect to t.
 	 * @param t First parameter for the spiral.
 	 * @param s Second parameter for the spiral.
+	 * @return the z-coordinates with respect to t.
 	 */
 	@Override
 	public double computeZt(double t, double s) {
@@ -125,6 +133,7 @@ public class Torus extends ParametricSurface3D {
 	 * Computes the z-coordinates of the spiral with respect to s.
 	 * @param t First parameter for the spiral.
 	 * @param s Second parameter for the spiral.
+	 * @return the z-coordinates with respect to s.
 	 */
 	@Override
 	public double computeZs(double t, double s) {

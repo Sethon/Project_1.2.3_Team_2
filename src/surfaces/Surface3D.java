@@ -35,6 +35,7 @@ public abstract class Surface3D implements Labelizable{
 	
 	/**
 	 * Get the label of a surface model.
+	 * @return the label of the model.
 	 */
 	public String getLabel() {
 		return labelID;
