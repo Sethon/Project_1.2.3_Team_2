@@ -9,7 +9,15 @@ import surfaces.FVPolygonMesh;
 import surfaces.Point3D;
 import surfaces.Triangle3D;
 
+/**
+ * Creates new PLY files using the inputted FVPolygonMesh.
+ */
 public class PLYWriter {
+	/**
+	 * Creates the PLY file.
+	 * @param filename The name the new file should get.
+	 * @param fvpm The FVPolygonMesh which needs to be in the PLY file.
+	 */
 	public void writeFVMesh(String filename, FVPolygonMesh fvpm) {
 		try {
 			ArrayList<Point3D> vertices = fvpm.vertices();

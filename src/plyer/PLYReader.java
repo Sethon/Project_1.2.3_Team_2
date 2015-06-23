@@ -8,13 +8,25 @@ import surfaces.FVPolygonMesh;
 import surfaces.Point3D;
 import surfaces.Triangle3D;
 
+/**
+ * Reads PLY files and uses the found values to create a new Face-Vertex polygon Mesh.
+ */
 public class PLYReader {
 	private double magnFactor;
 	
+	/**
+	 * Creates a new PLYReader object with a certain magnifying value.
+	 * @param magnFactor The magnifying value which is multiplied with every element of the read FVPolygonMesh.
+	 */
 	public PLYReader(double magnFactor) {
 		this.magnFactor = magnFactor;
 	}
 	
+	/**
+	 * Reads the inputted file and creates a FVPolygonMesh with the elements.
+	 * @param filename The File to be read
+	 * @return the constructed FVPolygonMesh.
+	 */
 	public FVPolygonMesh getFVMesh(String filename) {
 		ArrayList<Point3D> vertices = new ArrayList<>();
 		ArrayList<Triangle3D> faces = new ArrayList<>();
