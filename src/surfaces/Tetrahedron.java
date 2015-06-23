@@ -2,12 +2,22 @@ package surfaces;
 
 import java.util.ArrayList;
 
+/**
+ * Creates tetrahedron objects containing 4 points.
+ */
 public class Tetrahedron extends Surface3D {
 	private Point3D p1;
 	private Point3D p2;
 	private Point3D p3;
 	private Point3D p4;
 	
+	/**
+	 * Instantiator which creates the new tetrahedron object with the given points.
+	 * @param v1 The first point of the tetrahedron.
+	 * @param v2 The second point of the tetrahedron.
+	 * @param v3 The third point of the tetrahedron.
+	 * @param v4 The fourth point of the tetrahedron.
+	 */
 	public Tetrahedron(Point3D v1, Point3D v2, Point3D v3, Point3D v4) {
 		p1 = v1;
 		p2 = v2;
@@ -15,6 +25,10 @@ public class Tetrahedron extends Surface3D {
 		p4 = v4;
 	}
 	
+	/**
+	 * Returns an arraylist containing the points of the tetrahedron.
+	 * @return arraylist containing the points.
+	 */
 	@Override
 	public ArrayList<Point3D> vertices() {
 		ArrayList<Point3D> tetra = new ArrayList<>();
@@ -26,6 +40,10 @@ public class Tetrahedron extends Surface3D {
 		return tetra;
 	}
 
+	/**
+	 * Returns an arraylist containing the four triangles the tetrahedron consists of.
+	 * @return arraylist containing the triangles.
+	 */
 	@Override
 	public ArrayList<Triangle3D> triangulate() {
 		Triangle3D t1 = new Triangle3D(p1,p2,p3);
@@ -40,6 +58,10 @@ public class Tetrahedron extends Surface3D {
 		return tetra;
 	}
 	
+	/**
+	 * Calculates the surface area of the tetrahedron.
+	 * @return the surface area.
+	 */
 	public double surfaceArea(){
 		Triangle3D t1 = new Triangle3D(p1,p2,p3);
 		Triangle3D t2 = new Triangle3D(p1,p2,p4);
@@ -49,6 +71,11 @@ public class Tetrahedron extends Surface3D {
 		return (t1.surfaceArea() + t2.surfaceArea() + t3.surfaceArea() + t4.surfaceArea());
 	}
 	
+	/**
+	 * Calculates the volume of the tetrahedron.
+	 * @param signed boolean which depicts the state of being signed or not.
+	 * @return the volume of the tetrahedron.
+	 */
 	public double volume(boolean signed){
 		double a = p1.getX();
 		double b = p1.getY();

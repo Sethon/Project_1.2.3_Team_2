@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 
+/**
+ * Face-Vertex polygon Mesh which extends the abstract PolygonMesh class.
+ */
 public class FVPolygonMesh extends PolygonMesh {
 
 	private static boolean 						simplicityAssumption 	= false;
@@ -11,6 +14,12 @@ public class FVPolygonMesh extends PolygonMesh {
 	private ArrayList<Triangle3D> 				faces;
 	private ArrayList<ArrayList<Triangle3D>> 	verticesToFaces;
 	
+	/**
+	 * Creates a new Face-Vertex Polygon Mesh with the given information.
+	 * @param vertices An arraylist containing the vertices of the FVPolygonMesh.
+	 * @param faces An arraylist containing the faces (Triangle3D) of the FVPolygonMesh.
+	 * @param verticesToFaces An arraylist containing arraylists, where each arraylist states which faces are connected to which vertex of the FVPolygonMesh.
+	 */
 	public FVPolygonMesh(ArrayList<Point3D> vertices, ArrayList<Triangle3D> faces,
 			ArrayList<ArrayList<Triangle3D>> verticesToFaces) {
 		instCnt++;
@@ -20,6 +29,9 @@ public class FVPolygonMesh extends PolygonMesh {
 		this.verticesToFaces = verticesToFaces;
 	}
 	
+	/**
+	 * Creates a new empty Face-Vertex Polygon Mesh.
+	 */
 	public FVPolygonMesh() {
 		instCnt++;
 		assignLabel();
@@ -28,6 +40,10 @@ public class FVPolygonMesh extends PolygonMesh {
 		verticesToFaces = new ArrayList<ArrayList<Triangle3D>>();
 	}
 	
+	/**
+	 * Returns an arraylist containing the faces of the current Face-Vertex polygon Mesh.
+	 * @return the faces.
+	 */
 	@Override
 	public ArrayList<Triangle3D> triangulate() {
 		ArrayList<Triangle3D> tmp = new ArrayList<>();
@@ -43,6 +59,11 @@ public class FVPolygonMesh extends PolygonMesh {
 		}
 	}
 
+	/**
+	 * Adds a new point to the polygon Mesh.
+	 * @param p the new point.
+	 * @param instruct instruction for the points, unused.
+	 */
 	@Override
 	public void addVertex(Point3D p, String instruct) {
 		if (vertices.size() <= 1) {
@@ -61,6 +82,11 @@ public class FVPolygonMesh extends PolygonMesh {
 		}
 	}
 	
+	/**
+	 * Finds and returns the two closest vertices to the given point p.
+	 * @param p Point which needs the two closest vertices.
+	 * @return array containing the indices of the found vertices.
+	 */
 	private int[] find2ClosestPs(Point3D p) {
 		Point3D v1 = vertices.get(0);
 		Point3D v2 = vertices.get(1);
@@ -97,6 +123,10 @@ public class FVPolygonMesh extends PolygonMesh {
 		return new int[] {v1Ind, v2Ind};
 	}
 	
+	/**
+	 * Creates a string containing all information of the Face-Vertex polygon Mesh.
+	 * @return The informative string.
+	 */
 	@Override
 	public String toString() {
 		return "Face-Vertex Polygon Mesh" + "\n" + "Vertices: " + vertices.size() + 
@@ -104,6 +134,10 @@ public class FVPolygonMesh extends PolygonMesh {
 				"\n" + "Volume: " + volume() + " cub. u.";
 	}
 
+	/**
+	 * Calculates the surface area for every face and returns the sum of these surfaces.
+	 * @return the total surface area of the Face-Vertex polygon Mesh.
+	 */
 	@Override
 	public double surfaceArea() {
 		double sum = 0;
@@ -114,6 +148,10 @@ public class FVPolygonMesh extends PolygonMesh {
 		return sum;
 	}
 
+	/**
+	 * Calculates the volume of the Face-Vertex polygon Mesh.
+	 * @return the total volume of the Face-Vertex polygon Mesh.
+	 */
 	public double volume() {
 		if (simplicityAssumption) {
 			double x0 = 0;
@@ -164,12 +202,27 @@ public class FVPolygonMesh extends PolygonMesh {
 	
 	}
 
+	/**
+	 * Adds two new points to the Mesh.
+	 * @param p1 The first new point.
+	 * @param p2 The second new point.
+	 * @param instruct instruction for the points, unused.
+	 * @param w Weight for the points, unused.
+	 */
 	@Override
 	public void add2Vertices(Point3D p1, Point3D p2, String instruct, double w) {
 		addVertex(p1, null);
 		addVertex(p2, null);
 	}
 
+	/**
+	 * Adds three new points to the Mesh which directly form a new Triangle.
+	 * @param p1 The first new point.
+	 * @param p2 The second new point.
+	 * @param p3 The third new point.
+	 * @param instruct instruction for the points, unused.
+	 * @param w Weight for the points, unused.
+	 */
 	@Override
 	public void add3Vertices(Point3D p1, Point3D p2, Point3D p3,
 			String instruct, double w) {
@@ -186,6 +239,10 @@ public class FVPolygonMesh extends PolygonMesh {
 		verticesToFaces.get(verticesToFaces.size() - 3).add(face);
 	}
 	
+	/**
+	 * Returns an arraylist containing the arraylist which states which faces are connected to what vertices.
+	 * @return the arraylist with the faces to vertices.
+	 */
 	public ArrayList<ArrayList<Triangle3D>> vertsToFaces() {
 		return verticesToFaces;
 	}

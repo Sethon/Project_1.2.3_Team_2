@@ -5,6 +5,9 @@ import java.util.ArrayList;
 
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 
+/**
+ * Abstract extension of the Surface3D class which is used for parametric surfaces.
+ */
 public abstract class ParametricSurface3D extends Surface3D {
 	//unit vectors
 	public static final String TRAPEZOID 				= "Trapezoidal rule";
@@ -24,19 +27,84 @@ public abstract class ParametricSurface3D extends Surface3D {
 	protected int 		n1;
 	protected int 		n2;
 	
+	/**
+	 * Abstract method which calculates the X value of the parametric surface.
+	 * @param t First parameter which is needed for the parametric coordinate calculations.
+	 * @param s Second parameter which is needed for the parametric coordinate calculations.
+	 * @return the x-coordinate
+	 */
 	public abstract double computeX(double t, double s);
+	
+	/**
+	 * Abstract method which calculates the Y value of the parametric surface.
+	 * @param t First parameter which is needed for the parametric coordinate calculations.
+	 * @param s Second parameter which is needed for the parametric coordinate calculations.
+	 * @return the y-coordinate
+	 */
 	public abstract double computeY(double t, double s);
+
+	/**
+	 * Abstract method which calculates the Z value of the parametric surface.
+	 * @param t First parameter which is needed for the parametric coordinate calculations.
+	 * @param s Second parameter which is needed for the parametric coordinate calculations.
+	 * @return the z-coordinate
+	 */
 	public abstract double computeZ(double t, double s);
 	
+	/**
+	 * Abstract method which calculates the X value of the parametric surface with respect to t.
+	 * @param t First parameter which is needed for the parametric coordinate calculations.
+	 * @param s Second parameter which is needed for the parametric coordinate calculations.
+	 * @return the x-coordinate
+	 */
 	public abstract double computeXt(double t, double s);
+
+	/**
+	 * Abstract method which calculates the X value of the parametric surface with respect to s.
+	 * @param t First parameter which is needed for the parametric coordinate calculations.
+	 * @param s Second parameter which is needed for the parametric coordinate calculations.
+	 * @return the x-coordinate
+	 */
 	public abstract double computeXs(double t, double s);
-	
+
+	/**
+	 * Abstract method which calculates the Y value of the parametric surface with respect to t.
+	 * @param t First parameter which is needed for the parametric coordinate calculations.
+	 * @param s Second parameter which is needed for the parametric coordinate calculations.
+	 * @return the y-coordinate
+	 */
 	public abstract double computeYt(double t, double s);
+
+	/**
+	 * Abstract method which calculates the Y value of the parametric surface with respect to s.
+	 * @param t First parameter which is needed for the parametric coordinate calculations.
+	 * @param s Second parameter which is needed for the parametric coordinate calculations.
+	 * @return the y-coordinate
+	 */
 	public abstract double computeYs(double t, double s);
-	
+
+	/**
+	 * Abstract method which calculates the Z value of the parametric surface with respect to t.
+	 * @param t First parameter which is needed for the parametric coordinate calculations.
+	 * @param s Second parameter which is needed for the parametric coordinate calculations.
+	 * @return the z-coordinate
+	 */
 	public abstract double computeZt(double t, double s);
+	
+	/**
+	 * Abstract method which calculates the Z value of the parametric surface with respect to s.
+	 * @param t First parameter which is needed for the parametric coordinate calculations.
+	 * @param s Second parameter which is needed for the parametric coordinate calculations.
+	 * @return the z-coordinate
+	 */
 	public abstract double computeZs(double t, double s);
 	
+	/**
+	 * Calculates the vector R using the parametric parameters t and s.
+	 * @param t First parameter which is needed for the parametric coordinate calculations.
+	 * @param s Second parameter which is needed for the parametric coordinate calculations.
+	 * @return the computed vector.
+	 */
 	public Vector3D computeR(double t, double s) {
 		Vector3D a = I_VECTOR.scalarMultiply(computeX(t, s));
 		Vector3D b = J_VECTOR.scalarMultiply(computeY(t, s));
@@ -46,7 +114,13 @@ public abstract class ParametricSurface3D extends Surface3D {
 		
 		return d.add(c);
 	}
-	
+
+	/**
+	 * Calculates the vector R with respect to t using the parametric parameters t and s.
+	 * @param t First parameter which is needed for the parametric coordinate calculations.
+	 * @param s Second parameter which is needed for the parametric coordinate calculations.
+	 * @return the computed vector.
+	 */
 	public Vector3D computeRt(double t, double s) {
 		Vector3D a = I_VECTOR.scalarMultiply(computeXt(t, s));
 		Vector3D b = J_VECTOR.scalarMultiply(computeYt(t, s));
@@ -56,7 +130,13 @@ public abstract class ParametricSurface3D extends Surface3D {
 		
 		return d.add(c);
 	}
-	
+
+	/**
+	 * Calculates the vector R with respect to s using the parametric parameters t and s.
+	 * @param t First parameter which is needed for the parametric coordinate calculations.
+	 * @param s Second parameter which is needed for the parametric coordinate calculations.
+	 * @return the computed vector.
+	 */
 	public Vector3D computeRs(double t, double s) {
 		Vector3D a = I_VECTOR.scalarMultiply(computeXs(t, s));
 		Vector3D b = J_VECTOR.scalarMultiply(computeYs(t, s));
@@ -67,6 +147,9 @@ public abstract class ParametricSurface3D extends Surface3D {
 		return d.add(c);
 	}
 	
+	/**
+	 * Checks which of the surface area calculations need to be called.
+	 */
 	@Override
 	public double surfaceArea() {
 		if (trapezoid) {
@@ -76,6 +159,10 @@ public abstract class ParametricSurface3D extends Surface3D {
 		}	
 	}
 	
+	/**
+	 * Uses the trapezoid method to calculate the surface area of the parametric surface.
+	 * @return the surface area.
+	 */
 	private double surfaceAreaTrap() {
 		double[] It = new double[INTEGRATION_STEPS_TRAP + 1];
 		double stepsize = (t1-t0)/INTEGRATION_STEPS_TRAP;
@@ -96,6 +183,10 @@ public abstract class ParametricSurface3D extends Surface3D {
 		return Ifin;
 	}
 	
+	/**
+	 * Uses the Simpson method to calculate the surface area of the parametric surface.
+	 * @return the surface area.
+	 */
 	private double surfaceAreaSimp() {
 		double[] It = new double[INTEGRATION_STEPS_SIMP + 1];
 		double stepsize = (t1 - t0)/INTEGRATION_STEPS_SIMP;
@@ -119,6 +210,14 @@ public abstract class ParametricSurface3D extends Surface3D {
 		return Ifin * (((s1 - s0)/INTEGRATION_STEPS_SIMP)/3);
 	}
 	
+	/**
+	 * The trapezoid method for calculating integrals.
+	 * @param step the stepsize for the checks.
+	 * @param x Certain x value for the integral.
+	 * @param t0 Lower bound for the integral.
+	 * @param tn Upper bound for the integral.
+	 * @return the computed integral value.
+	 */
 	private double trapezoid(double step, double x, double t0, double tn) {
 		double I = 0;
 		for(double i = t0; i <= tn + 10E-14; i+=step) {
@@ -140,7 +239,15 @@ public abstract class ParametricSurface3D extends Surface3D {
 		}
 		return step * I;
 	}
-	
+
+	/**
+	 * The Simpson method for calculating integrals.
+	 * @param step the stepsize for the checks.
+	 * @param x Certain x value for the integral.
+	 * @param t0 Lower bound for the integral.
+	 * @param tn Upper bound for the integral.
+	 * @return the computed integral value.
+	 */
 	private double simpson(double step, double x, double t0, double tn) {
 		double Is = 0;
 		for(int i = 0; i < INTEGRATION_STEPS_SIMP + 1; i++) {
@@ -163,6 +270,10 @@ public abstract class ParametricSurface3D extends Surface3D {
 		return Is;
 	}
 	
+	/**
+	 * Constructs and returns the faces of the parametric surface.
+	 * @return the faces of the parametric surface.
+	 */
 	@Override
 	public ArrayList<Triangle3D> triangulate() {
 		ArrayList<Triangle3D> tmp = new ArrayList<>();
@@ -186,6 +297,10 @@ public abstract class ParametricSurface3D extends Surface3D {
 		return tmp;
 	}
 	
+	/**
+	 * Returns the vertices of the parametric surfaces.
+	 * @return the vertices of te parametric surface.
+	 */
 	@Override
 	public ArrayList<Point3D> vertices() {
 		ArrayList<Point3D> tmp = new ArrayList<>();
@@ -197,11 +312,19 @@ public abstract class ParametricSurface3D extends Surface3D {
 		return tmp;
 	}
 	
+	/**
+	 * Returns a string containing all the information of the parametric surface.
+	 * @return the string containing the information.
+	 */
 	@Override
 	public String toString() {
 		return "Parametric surface" + "\nt ∈ [" + t0 + "; " + t1 + "]" + "\ns ∈ [" + s0 + "; " + s1 + "]";
 	}
 	
+	/**
+	 * Changes the numerical approach for calculating integrals.
+	 * @param label String containing the approach.
+	 */
 	public static void switchNumericalMethod(String label) {
 		trapezoid = label.equals(TRAPEZOID);
 	}
