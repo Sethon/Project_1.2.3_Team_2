@@ -211,7 +211,7 @@ public class NURBS extends Surface3D implements EditableSurface {
      }
 
      /**
-      * Addes a new curve to the control net in the given direction, specified between two supplied points.
+      * Adds a new curve to the control net in the given direction, specified between two supplied points.
       * @param p1 First point of the new curve.
       * @param p2 Second point of the new curve.
       * @param instruct Direction in which the curve is to be added.
