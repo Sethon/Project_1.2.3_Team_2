@@ -14,101 +14,103 @@ import application.SpaceModel;
 import surfaces.NURBS;
 import surfaces.Point3D;
 import surfaces.Surface3D;
+import surfaces.WPoint3D;
 
 public class VertexTable extends JFrame implements Runnable {
 
-	private static final long serialVersionUID = 1L;
-	private Surface3D 			surface;
-	private ArrayList<Point3D>	vertices;
+     private static final long serialVersionUID = 1L;
+     private Surface3D surface;
+     private ArrayList<Point3D> vertices;
 
-	private int 			rows;
-	private int 			cols;
-	private JTable			table;
-	private SpaceModel		model;	
+     private int rows;
+     private int cols;
+     private JTable table;
+     private SpaceModel model;
 
 
+     public VertexTable(Surface3D surface, SpaceModel model) {
+          this.surface = surface;
+          this.model = model;
 
-	public VertexTable(Surface3D surface, SpaceModel model) {
-		this.surface = surface;
-		this.model = model;
-		
-		vertices = surface.vertices();
-		rows = vertices.size();
-		if (surface instanceof NURBS) {
-			cols = 4;
-		} else {
-			cols = 3;
-		}
+          vertices = surface.vertices();
+          rows = vertices.size();
+          if (surface instanceof NURBS) {
+               cols = 4;
+          } else {
+               cols = 3;
+          }
 
-		constructTable();
-		table.getRowHeight();
+          constructTable();
+          table.getRowHeight();
 
-		this.setSize(500, 500);
+          this.setSize(500, 500);
 
-		JScrollPane pane = new JScrollPane(table);
-		pane.setSize(500, (rows + 1) * table.getRowHeight());
-		JPanel panel = new JPanel();
-		panel.add(pane);
-		this.add(panel);
-	}
+          JScrollPane pane = new JScrollPane(table);
+          pane.setSize(500, (rows + 1) * table.getRowHeight());
+          JPanel panel = new JPanel();
+          panel.add(pane);
+          this.add(panel);
+     }
 
-	private void constructTable() {
-		String[] columnNames;
+     private void constructTable() {
+          String[] columnNames;
 
-		if (cols == 4) {
-			columnNames	= new String[] {"X", "Y", "Z", "W"};	
-		} else {
-			columnNames	= new String[] {"X", "Y", "Z"};
-		}
+          if (cols == 4) {
+               columnNames = new String[]{"X", "Y", "Z", "W"};
+          } else {
+               columnNames = new String[]{"X", "Y", "Z"};
+          }
 
-		String[][] data = new String[rows][cols];
+          String[][] data = new String[rows][cols];
 
-		for (int i = 0; i < rows; i++) {
-			data[i][0] = "" + vertices.get(i).getX();
-			data[i][1] = "" + vertices.get(i).getY(); 
-			data[i][2] = "" + vertices.get(i).getZ(); 
-		}
+          for (int i = 0; i < rows; i++) {
+               Point3D p = vertices.get(i);
+               data[i][0] = "" + p.getX();
+               data[i][1] = "" + p.getY();
+               data[i][2] = "" + p.getZ();
+               if (surface instanceof NURBS) {
+                    data[i][3] = "" + ((WPoint3D) p).getWeight();
+               }
+          }
 
-		table = new JTable(data, columnNames);
-		table.setRowHeight(14);
-		table.getModel().addTableModelListener(new TableModelListener() {
+          table = new JTable(data, columnNames);
+          table.setRowHeight(14);
+          table.getModel().addTableModelListener(new TableModelListener() {
 
-			public void tableChanged(TableModelEvent e) {
-				if (e.getType() == TableModelEvent.DELETE) {
-					if (e.getColumn() == 0) {
-						vertices.get(e.getFirstRow()).setX(0);
-					}
-					else if (e.getColumn() == 1) {
-						vertices.get(e.getFirstRow()).setY(0);
-					} else {
-						vertices.get(e.getFirstRow()).setZ(0);
-					}
-				} else {
-					String regexDecimal = "^-?\\d*\\.\\d+$";
-					String regexInteger = "^-?\\d+$";
-					String regexDouble = regexDecimal + "|" + regexInteger;
-					if (((String) (table.getValueAt(e.getFirstRow(), e.getColumn()))).matches(regexDouble)) {
-						double coord = Double.parseDouble((String) (table.getValueAt(e.getFirstRow(), e.getColumn())));
-						if (e.getColumn() == 0) {
-							vertices.get(e.getFirstRow()).setX(coord);
-						}
-						else if (e.getColumn() == 1) {
-							vertices.get(e.getFirstRow()).setY(coord);
-						} else {
-							vertices.get(e.getFirstRow()).setZ(coord);
-						}
-					}
-				}
-				model.updateStructure((surface).getLabel());
-			}
-		});
-	}
+               public void tableChanged(TableModelEvent e) {
+                    if (e.getType() == TableModelEvent.DELETE) {
+                         if (e.getColumn() == 0) {
+                              vertices.get(e.getFirstRow()).setX(0);
+                         } else if (e.getColumn() == 1) {
+                              vertices.get(e.getFirstRow()).setY(0);
+                         } else {
+                              vertices.get(e.getFirstRow()).setZ(0);
+                         }
+                    } else {
+                         String regexDecimal = "^-?\\d*\\.\\d+$";
+                         String regexInteger = "^-?\\d+$";
+                         String regexDouble = regexDecimal + "|" + regexInteger;
+                         if (((String) (table.getValueAt(e.getFirstRow(), e.getColumn()))).matches(regexDouble)) {
+                              double coord = Double.parseDouble((String) (table.getValueAt(e.getFirstRow(), e.getColumn())));
+                              if (e.getColumn() == 0) {
+                                   vertices.get(e.getFirstRow()).setX(coord);
+                              } else if (e.getColumn() == 1) {
+                                   vertices.get(e.getFirstRow()).setY(coord);
+                              } else {
+                                   vertices.get(e.getFirstRow()).setZ(coord);
+                              }
+                         }
+                    }
+                    model.updateStructure((surface).getLabel());
+               }
+          });
+     }
 
-	@Override
-	public void run() {
-		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		this.setResizable(false);
-		this.setTitle("Vertices List");
-		this.setVisible(true);
-	}
+     @Override
+     public void run() {
+          this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+          this.setResizable(false);
+          this.setTitle("Vertices List");
+          this.setVisible(true);
+     }
 }

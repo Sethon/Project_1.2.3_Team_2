@@ -30,6 +30,6 @@ public class BeyondLand {
 		fr.add(menu, BorderLayout.NORTH);
 		fr.add(lpn, BorderLayout.EAST);
 		fr.setVisible(true);
-		fr.setResizable(false);
+		fr.setResizable(true);
 	}
 }

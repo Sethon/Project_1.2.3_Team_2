@@ -553,7 +553,7 @@ public class NURBS extends Surface3D implements EditableSurface {
                right[i] = lerp(p1, p4, startSpacing);
           }
           spacing = 1 / (double) (nU-1);
-          for (int i = 0; i < nV; i++) {
+          for (int i = 0; i < nV - 1; i++) {
                startSpacing = 0;
                for (int j = 0; j < nU; j++, startSpacing += spacing) {
                     controlNet.get(j).add(lerp(right[i], left[i], startSpacing));
