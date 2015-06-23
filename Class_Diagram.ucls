@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.1.8" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
+  realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
+  <class id="1" language="java" name="application.BeyondLand" project="Project_1.2.3_Team_2" 
+    file="/Project_1.2.3_Team_2/src/application/BeyondLand.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="64" y="135"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="application.SpaceModel" project="Project_1.2.3_Team_2" 
+    file="/Project_1.2.3_Team_2/src/application/SpaceModel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="200" y="250"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="gui.CheckBoxPanel" project="Project_1.2.3_Team_2" 
+    file="/Project_1.2.3_Team_2/src/gui/CheckBoxPanel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="496" y="130"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="gui.GLFrame" project="Project_1.2.3_Team_2" 
+    file="/Project_1.2.3_Team_2/src/gui/GLFrame.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="367" y="250"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="gui.ListPanel.PointInputController" project="Project_1.2.3_Team_2" 
+    file="/Project_1.2.3_Team_2/src/gui/ListPanel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="197" y="40"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="gui.ListPanel" project="Project_1.2.3_Team_2" 
+    file="/Project_1.2.3_Team_2/src/gui/ListPanel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="198" y="135"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="gui.Renderer" project="Project_1.2.3_Team_2" 
+    file="/Project_1.2.3_Team_2/src/gui/Renderer.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="369" y="340"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" name="gui.UIMenu" project="Project_1.2.3_Team_2" 
+    file="/Project_1.2.3_Team_2/src/gui/UIMenu.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="366" y="132"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="9" language="java" name="gui.UIMenu.PLYFilter" project="Project_1.2.3_Team_2" 
+    file="/Project_1.2.3_Team_2/src/gui/UIMenu.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="368" y="38"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="10" language="java" name="gui.VertexTable" project="Project_1.2.3_Team_2" 
+    file="/Project_1.2.3_Team_2/src/gui/VertexTable.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="74" y="339"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="11" language="java" name="plyer.NRBReader" project="Project_1.2.3_Team_2" 
+    file="/Project_1.2.3_Team_2/src/plyer/NRBReader.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="662" y="224"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="12" language="java" name="plyer.NRBWriter" project="Project_1.2.3_Team_2" 
+    file="/Project_1.2.3_Team_2/src/plyer/NRBWriter.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="553" y="223"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="13" language="java" name="plyer.PLYReader" project="Project_1.2.3_Team_2" 
+    file="/Project_1.2.3_Team_2/src/plyer/PLYReader.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="662" y="283"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="14" language="java" name="plyer.PLYWriter" project="Project_1.2.3_Team_2" 
+    file="/Project_1.2.3_Team_2/src/plyer/PLYWriter.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="553" y="284"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="15" language="java" name="surfaces.ClarkCell" project="Project_1.2.3_Team_2" 
+    file="/Project_1.2.3_Team_2/src/surfaces/ClarkCell.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="572" y="562"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="16" language="java" name="surfaces.Clarkinator" project="Project_1.2.3_Team_2" 
+    file="/Project_1.2.3_Team_2/src/surfaces/Clarkinator.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="571" y="652"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <interface id="17" language="java" name="surfaces.EditableSurface" project="Project_1.2.3_Team_2" 
+    file="/Project_1.2.3_Team_2/src/surfaces/EditableSurface.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="243" y="569"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </interface>  
+  <class id="18" language="java" name="surfaces.FVPolygonMesh" project="Project_1.2.3_Team_2" 
+    file="/Project_1.2.3_Team_2/src/surfaces/FVPolygonMesh.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="415" y="655"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <interface id="19" language="java" name="surfaces.Labelizable" project="Project_1.2.3_Team_2" 
+    file="/Project_1.2.3_Team_2/src/surfaces/Labelizable.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="249" y="472"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </interface>  
+  <class id="20" language="java" name="surfaces.NURBS" project="Project_1.2.3_Team_2" 
+    file="/Project_1.2.3_Team_2/src/surfaces/NURBS.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="75" y="567"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="21" language="java" name="surfaces.ParametricSurface3D" project="Project_1.2.3_Team_2" 
+    file="/Project_1.2.3_Team_2/src/surfaces/ParametricSurface3D.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="108" y="653"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="22" language="java" name="surfaces.PolygonMesh" project="Project_1.2.3_Team_2" 
+    file="/Project_1.2.3_Team_2/src/surfaces/PolygonMesh.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="414" y="569"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="23" language="java" name="surfaces.Spiral" project="Project_1.2.3_Team_2" 
+    file="/Project_1.2.3_Team_2/src/surfaces/Spiral.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="107" y="750"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="24" language="java" name="surfaces.Surface3D" project="Project_1.2.3_Team_2" 
+    file="/Project_1.2.3_Team_2/src/surfaces/Surface3D.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="75" y="474"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="25" language="java" name="surfaces.SurfaceUtilities" project="Project_1.2.3_Team_2" 
+    file="/Project_1.2.3_Team_2/src/surfaces/SurfaceUtilities.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="585" y="469"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="26" language="java" name="surfaces.Tetrahedron" project="Project_1.2.3_Team_2" 
+    file="/Project_1.2.3_Team_2/src/surfaces/Tetrahedron.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="431" y="469"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="27" language="java" name="surfaces.Torus" project="Project_1.2.3_Team_2" 
+    file="/Project_1.2.3_Team_2/src/surfaces/Torus.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="227" y="750"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="28" language="java" name="surfaces.Triangle3D" project="Project_1.2.3_Team_2" 
+    file="/Project_1.2.3_Team_2/src/surfaces/Triangle3D.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="266" y="657"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <association id="29">    
+    <bendpoint x="226" y="180"/>    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="30" name="list"/>      
+      <multiplicity id="31" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="32">    
+    <end type="SOURCE" refId="10" navigable="false">      
+      <attribute id="33" name="surface"/>      
+      <multiplicity id="34" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="24" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="35">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="36" name="frame"/>      
+      <multiplicity id="37" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="38">    
+    <end type="SOURCE" refId="10" navigable="false">      
+      <attribute id="39" name="model"/>      
+      <multiplicity id="40" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="41">    
+    <end type="SOURCE" refId="18" navigable="false">      
+      <attribute id="42" name="faces"/>      
+      <multiplicity id="43" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="28" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="44">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="45" name="frame"/>      
+      <multiplicity id="46" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <nesting id="47">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="9"/>  
+  </nesting>  
+  <realization id="48">    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="17"/>  
+  </realization>  
+  <association id="49">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="50" name="model"/>      
+      <multiplicity id="51" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="52">    
+    <end type="SOURCE" refId="16" navigable="false">      
+      <attribute id="53" name="cells"/>      
+      <multiplicity id="54" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="15" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <generalization id="55">    
+    <bendpoint x="134" y="592"/>    
+    <bendpoint x="134" y="527"/>    
+    <end type="SOURCE" refId="28"/>    
+    <end type="TARGET" refId="24"/>  
+  </generalization>  
+  <nesting id="56">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="5"/>  
+  </nesting>  
+  <association id="57">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="58" name="frame"/>      
+      <multiplicity id="59" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <generalization id="60">    
+    <end type="SOURCE" refId="23"/>    
+    <end type="TARGET" refId="21"/>  
+  </generalization>  
+  <association id="61">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="62" name="renderer"/>      
+      <multiplicity id="63" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <generalization id="64">    
+    <bendpoint x="13" y="653"/>    
+    <bendpoint x="14" y="535"/>    
+    <end type="SOURCE" refId="21"/>    
+    <end type="TARGET" refId="24"/>  
+  </generalization>  
+  <generalization id="65">    
+    <bendpoint x="226" y="706"/>    
+    <bendpoint x="187" y="706"/>    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="21"/>  
+  </generalization>  
+  <realization id="66">    
+    <end type="SOURCE" refId="22"/>    
+    <end type="TARGET" refId="17"/>  
+  </realization>  
+  <generalization id="67">    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="22"/>  
+  </generalization>  
+  <association id="68">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="69" name="highlight"/>      
+      <multiplicity id="70" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="24" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <generalization id="71">    
+    <bendpoint x="385" y="520"/>    
+    <bendpoint x="177" y="520"/>    
+    <end type="SOURCE" refId="22"/>    
+    <end type="TARGET" refId="24"/>  
+  </generalization>  
+  <association id="72">    
+    <end type="SOURCE" refId="16" navigable="false">      
+      <attribute id="73" name="pm"/>      
+      <multiplicity id="74" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="18" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <realization id="75">    
+    <end type="SOURCE" refId="24"/>    
+    <end type="TARGET" refId="19"/>  
+  </realization>  
+  <generalization id="76">    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="24"/>  
+  </generalization>  
+  <generalization id="77">    
+    <bendpoint x="359" y="506"/>    
+    <bendpoint x="196" y="506"/>    
+    <end type="SOURCE" refId="26"/>    
+    <end type="TARGET" refId="24"/>  
+  </generalization>  
+  <association id="78">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="79" name="model"/>      
+      <multiplicity id="80" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="false" package="false" protected="false" private="false" static="false"/>    
+    <operations public="false" package="false" protected="false" private="false" static="false"/>  
+  </classifier-display>  
+  <association-display labels="false" multiplicity="false"/>
+</class-diagram>
