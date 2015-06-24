@@ -83,8 +83,10 @@ public class VertexTable extends JFrame implements Runnable {
                               vertices.get(e.getFirstRow()).setX(0);
                          } else if (e.getColumn() == 1) {
                               vertices.get(e.getFirstRow()).setY(0);
-                         } else {
+                         } else if (e.getColumn() == 2) {
                               vertices.get(e.getFirstRow()).setZ(0);
+                         } else {
+                              ((WPoint3D)vertices.get(e.getFirstRow())).setWeight(0);
                          }
                     } else {
                          String regexDecimal = "^-?\\d*\\.\\d+$";
@@ -96,8 +98,10 @@ public class VertexTable extends JFrame implements Runnable {
                                    vertices.get(e.getFirstRow()).setX(coord);
                               } else if (e.getColumn() == 1) {
                                    vertices.get(e.getFirstRow()).setY(coord);
-                              } else {
+                              } else if (e.getColumn() == 2) {
                                    vertices.get(e.getFirstRow()).setZ(coord);
+                              } else {
+                                   ((WPoint3D)vertices.get(e.getFirstRow())).setWeight(coord);
                               }
                          }
                     }
