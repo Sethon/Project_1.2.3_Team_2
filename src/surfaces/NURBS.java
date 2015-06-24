@@ -538,7 +538,6 @@ public class NURBS extends Surface3D implements EditableSurface {
           for (ArrayList<WPoint3D> i : controlNet) {
                i.add(lerp(p1, p2, startSpacing));
                startSpacing += spacing;
-               System.out.println(i.toString());
           }
 
           WPoint3D[] left = new WPoint3D[nV];
@@ -558,7 +557,6 @@ public class NURBS extends Surface3D implements EditableSurface {
                for (int j = 0; j < nU; j++, startSpacing += spacing) {
                     controlNet.get(j).add(lerp(right[i], left[i], startSpacing));
                }
-               System.out.println(controlNet.get(i).toString());
           }
      }
 
